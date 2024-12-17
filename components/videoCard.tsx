@@ -4,7 +4,7 @@ import { Download,Clock,FileDown,FileUp } from 'lucide-react'
 import dayjs from 'dayjs'
 import relativeTime from "dayjs/plugin/relativeTime"
 import { filesize } from 'filesize'
-import { Video } from '@prisma/client'
+import { Video } from '@/types';
 
 dayjs.extend(relativeTime)
 
@@ -13,7 +13,7 @@ interface VideoCardProps{
     onDownload: (url:string,title:string) => void;
 }
 
-const videoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
+const VideoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
     const [isHovered, setIsHovered] = useState(false)
     const [previewError, setPreviewError] = useState(false)
     const getThumbnailUrl = useCallback((publicId:string)=>{
@@ -140,4 +140,4 @@ const videoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
     );
 }
 
-export default videoCard
+export default VideoCard
