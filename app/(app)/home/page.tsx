@@ -12,9 +12,13 @@ function Home() {
   const fetchVideos = useCallback(async()=>{
     setLoading(true)
     try {
-      const response = await axios.get('/api/videos')
-      if(Array.isArray(response.data)){
-        setVideos(response.data)
+      const id = await axios.get("/api/get-token")
+      const response = await axios.post('/api/user',
+        {id:id.data.decodedToken.id||""}
+      )
+      console.log(response) 
+      if(Array.isArray(response.data.user.videos)){
+        setVideos(response.data.user.videos||[])
       }else{
         throw new Error("unexpected response format")
       }

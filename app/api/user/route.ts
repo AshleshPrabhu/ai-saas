@@ -5,7 +5,15 @@ const prisma = new PrismaClient()
 export const POST = async(request:NextRequest)=>{
     try {
         const {id} = await request.json()
-        const user = await prisma.user.findUnique({where:{id}})
+        if(id===""){
+            return new Response(JSON.stringify({error:"id is required",success:false}), {status:404})
+        }
+        const user = await prisma.user.findUnique({
+            where:{id},
+            include: {
+                videos: true, 
+            },
+        })
         if(!user) 
             return NextResponse.json({error:"User not found",success:false}, {status:404})
         
