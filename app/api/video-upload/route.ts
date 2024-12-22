@@ -1,6 +1,5 @@
 import { NextResponse,NextRequest } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
-import { auth } from '@clerk/nextjs/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
@@ -19,25 +18,26 @@ interface CloudinaryUploadResult{
 }
 
 export async function POST(request:NextRequest) {
-    const {userId} = await auth()
-    if(!userId){
-        return NextResponse.json({error:"unauthorized"},{status:500})
-    }
+    
     if(
         !process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
         !process.env.CLOUDINARY_API_KEY ||
         !process.env.CLOUDINARY_API_SECRET
     ){
-        return NextResponse.json({error:"cloudinary configuration is missing"},{status:500})
+        return NextResponse.json({error:"cloudinary configuration is missing",success:false},{status:500})
     }
     try {
         const formData = await request.formData()
+        const userId = formData.get("userId") as string
+        if(!userId||userId===""){
+            return NextResponse.json({error:"unauthorized",success:false},{status:500})
+        }
         const file = formData.get("file") as File | null
         const title = formData.get("title") as string
         const description = formData.get("description") as string
         const originalSize = formData.get("originalSize") as string
         if(!file){
-            return NextResponse.json({error:"file not found"},{status:400})
+            return NextResponse.json({error:"file not found",success:false},{status:400})
         }
         const bytes = await file.arrayBuffer()
         const buffer = Buffer.from(bytes)
@@ -70,14 +70,14 @@ export async function POST(request:NextRequest) {
                 originalSize,
                 publicId:result.public_id,
                 compressedSize:String(result.bytes),
-                duration:result.duration||0
-
+                duration:result.duration||0,
+                userId
             }
         })
-        return NextResponse.json({video},{status:201})
+        return NextResponse.json({video,success:true},{status:201})
     } catch (error) {
         console.log("cloudinary video upload error",error)
-        return NextResponse.json({error:"failed to upload video"},{status:500})
+        return NextResponse.json({error:"failed to upload video",success:false},{status:500})
     }finally{
         await prisma.$disconnect()
     }

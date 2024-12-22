@@ -1,142 +1,120 @@
-"use client";
-
-import React, { useState } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useClerk, useUser } from "@clerk/nextjs";
+"use client"
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import {
-LogOutIcon,
-MenuIcon,
-LayoutDashboardIcon,
-Share2Icon,
-UploadIcon,
-ImageIcon,
-} from "lucide-react";
+    LogOut,
+    Menu,
+    LayoutDashboard,
+    Share2,
+    Upload,
+    Image,
+    ImageIcon,
+    Home,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { getCookie } from 'cookies-next';
+import axios from 'axios';
+import { toast } from 'sonner';
+import Navbar from '@/components/Navbar'; 
 
 const sidebarItems = [
-{ href: "/home", icon: LayoutDashboardIcon, label: "Home Page" },
-{ href: "/social-share", icon: Share2Icon, label: "Social Share" },
-{ href: "/video-upload", icon: UploadIcon, label: "Video Upload" },
+    { href: '/home', icon: Home, label: 'Home' },
+    { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { href: '/social-share', icon: Share2, label: 'Social Share' },
+    { href: '/video-upload', icon: Upload, label: 'Video Upload' },
+    { href: '/background', icon: Image, label: 'Background Effects' },
 ];
 
-export default function AppLayout({
-children,
-}: Readonly<{
-children: React.ReactNode;
-}>) {
-const [sidebarOpen, setSidebarOpen] = useState(false);
-const pathname = usePathname();
-const router = useRouter();
-const { signOut } = useClerk();
-const { user } = useUser();
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
+    const [user, setUser] = useState<{ name: string; email: string }>({ name: '', email: '' });
+    const [isMenuOpen, setIsMenuOpen] = useState(false);  // State for mobile menu toggle
 
-const handleLogoClick = () => {
-    router.push("/");
-};
+    const handleSignOut = async () => {
+        const response = await axios.get("/api/user/logout")
+        if (response.status === 200) {
+            router.push('/login');
+        }else{
+            toast.error('Error signing out');   
+            return
+        }
+    };
 
-const handleSignOut = async () => {
-    await signOut();
-};
+    useEffect(() => {
+        const getUserId = async () => {
+            const userId = await getCookie('id');
+            if (userId) {
+                fetchUserData(userId as string);
+            }
+        };
 
-return (
-    <div className="drawer lg:drawer-open">
-    <input
-        id="sidebar-drawer"
-        type="checkbox"
-        className="drawer-toggle"
-        checked={sidebarOpen}
-        onChange={() => setSidebarOpen(!sidebarOpen)}
-    />
-    <div className="drawer-content flex flex-col">
-        {/* Navbar */}
-        <header className="w-full bg-base-200">
-        <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex-none lg:hidden">
-            <label
-                htmlFor="sidebar-drawer"
-                className="btn btn-square btn-ghost drawer-button"
-            >
-                <MenuIcon />
-            </label>
+        getUserId(); // Call the async function inside useEffect
+    }, []);
+
+    const fetchUserData = async (userId: string) => {
+        try {
+            const response = await axios.post('/api/user', { id: userId }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.data.success) {
+                setUser(response.data.user);
+            } else {
+                toast.error('Failed to fetch user data');
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-gray-100">
+        {/* Sidebar */}
+        <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transition-transform duration-200 ease-in-out`}>
+            <div className="h-full flex flex-col">
+            <div className="flex items-center justify-center h-16 px-4 border-b">
+                <ImageIcon className="w-8 h-8 text-blue-600" />
             </div>
-            <div className="flex-1">
-            <Link href="/" onClick={handleLogoClick}>
-                <div className="btn btn-ghost normal-case text-2xl font-bold tracking-tight cursor-pointer">
-                Cloudinary Showcase
-                </div>
-            </Link>
-            </div>
-            <div className="flex-none flex items-center space-x-4">
-            {user && (
-                <>
-                <div className="avatar">
-                    <div className="w-8 h-8 rounded-full">
-                    <img
-                        src={user.imageUrl}
-                        alt={
-                        user.username || user.emailAddresses[0].emailAddress
-                        }
-                    />
-                    </div>
-                </div>
-                <span className="text-sm truncate max-w-xs lg:max-w-md">
-                    {user.username || user.emailAddresses[0].emailAddress}
-                </span>
-                <button
-                    onClick={handleSignOut}
-                    className="btn btn-ghost btn-circle"
+    
+            <nav className="flex-1 px-4 py-4 space-y-1">
+                {sidebarItems.map((item) => (
+                <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center px-4 py-2 text-sm rounded-lg ${pathname === item.href ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}
                 >
-                    <LogOutIcon className="h-6 w-6" />
-                </button>
-                </>
+                    <item.icon className="w-5 h-5 mr-3" />
+                    {item.label}
+                </Link>
+                ))}
+            </nav>
+    
+            {user && (
+                <div className="p-4 border-t">
+                <Button
+                    onClick={handleSignOut}
+                    variant="outline"
+                    className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+                >
+                    <LogOut className="w-5 h-5 mr-3" />
+                    Sign Out
+                </Button>
+                </div>
             )}
             </div>
-        </div>
-        </header>
-        {/* Page content */}
-        <main className="flex-grow">
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 my-8">
+        </aside>
+    
+        {/* Main content */}
+        <div className="lg:pl-64">
+            {/* Top navbar */}
+            <Navbar onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
             {children}
         </div>
-        </main>
-    </div>
-    <div className="drawer-side">
-        <label htmlFor="sidebar-drawer" className="drawer-overlay"></label>
-        <aside className="bg-base-200 w-64 h-full flex flex-col">
-        <div className="flex items-center justify-center py-4">
-            <ImageIcon className="w-10 h-10 text-primary" />
         </div>
-        <ul className="menu p-4 w-full text-base-content flex-grow">
-            {sidebarItems.map((item) => (
-            <li key={item.href} className="mb-2">
-                <Link
-                href={item.href}
-                className={`flex items-center space-x-4 px-4 py-2 rounded-lg ${
-                    pathname === item.href
-                    ? "bg-primary text-white"
-                    : "hover:bg-base-300"
-                }`}
-                onClick={() => setSidebarOpen(false)}
-                >
-                <item.icon className="w-6 h-6" />
-                <span>{item.label}</span>
-                </Link>
-            </li>
-            ))}
-        </ul>
-        {user && (
-            <div className="p-4">
-            <button
-                onClick={handleSignOut}
-                className="btn btn-outline btn-error w-full"
-            >
-                <LogOutIcon className="mr-2 h-5 w-5" />
-                Sign Out
-            </button>
-            </div>
-        )}
-        </aside>
-    </div>
-    </div>
-);
+    );
 }

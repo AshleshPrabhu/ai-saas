@@ -2,14 +2,27 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
+import { getCookie } from 'cookies-next'
+import { toast } from 'sonner'
 function VideoUpload() {
   const [file, setFile] = useState<File|null>(null)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [isUploading, setIsUploading] = useState(false)
+  const [id, setId] = useState<string>("")
   const router = useRouter()
   // MAX FILE SIZE OF 80MB
   const MAX_FILE_SIZE = 80 * 1024 * 1024
+  const getUserId = async () => {
+    const response = await axios.get("/api/get-token")
+    if(!response.data.success){
+      toast.error("Failed to upload")
+    }
+    setId(response.data.decodedToken.id)
+  };
+  useEffect(() => {
+    getUserId(); // Call the async function inside useEffect
+  }, );
   const handleSubmit = async(event:React.FormEvent)=>{
     event.preventDefault()
     if(!file) return alert("Please select a file")
@@ -20,6 +33,7 @@ function VideoUpload() {
     formData.append('title', title)
     formData.append('description', description)
     formData.append('originalSize',file.size.toString())
+    formData.append('userId',id)
 
     try {
       const response = await axios.post('/api/video-upload', formData, {

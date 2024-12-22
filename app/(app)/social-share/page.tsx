@@ -1,6 +1,8 @@
 "use client"
 import React,{useState,useEffect,useRef} from 'react'
 import { CldImage } from 'next-cloudinary';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const socialFormats = {
   "Instagram Square (1:1)": { width: 1080, height: 1080, aspectRatio: "1:1" },
@@ -32,11 +34,23 @@ function SocialShare() {
   const [isUploading, setIsUploading] = useState(false)
   const [isTransforming, setIsTransforming] = useState(false)
   const imageRef = useRef<HTMLImageElement>(null);
+  const[id,setId]=useState<string>("")
   useEffect(()=>{
     if(uploadedImage){
       setIsTransforming(true)
     }
   },[uploadedImage,selectedFormat]) 
+  const getUserId = async () => {
+    const response = await axios.get("/api/get-token")
+    if(!response.data.success){
+      toast.error("Failed to upload")
+    }
+    setId(response.data.decodedToken.id)
+  };
+  useEffect(() => {
+    getUserId(); // Call the async function inside useEffect
+  }, );
+  
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -45,16 +59,17 @@ function SocialShare() {
     setIsUploading(true)
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("userId",id)
+    console.log([...formData.entries()]);
     try {
-      const response = await fetch('/api/image-upload', {
-        method: 'POST',
-        body: formData
-      });
-      if(!response.ok){
+      const response = await axios.post('/api/image-upload',
+        formData
+      );
+      console.log(response)
+      if(!response.data.success){
         throw new Error("failed to upload the image")
       }
-      const uploadedImage = await response.json();
-      setUploadedImage(uploadedImage.publicId)
+      setUploadedImage(response.data.publicId)
     } catch (error) {
       console.log("err in uploading",error)
       alert("failed to upload image")
