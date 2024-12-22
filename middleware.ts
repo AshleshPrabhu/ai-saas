@@ -20,5 +20,5 @@ if (!isPublicPath && !token) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-matcher: ['/','/social-share','/video-upload']
+matcher: ['/','/social-share','/video-upload','/home']
 }

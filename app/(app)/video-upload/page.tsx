@@ -4,6 +4,19 @@ import axios from 'axios'
 import {useRouter} from 'next/navigation'
 import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import CodeEditor from '@/components/CodeEditor'
+
+
 function VideoUpload() {
   const [file, setFile] = useState<File|null>(null)
   const [title, setTitle] = useState("")
@@ -45,7 +58,7 @@ function VideoUpload() {
         throw new Error("failed to upload video")
       }
       console.log(response.data)
-      router.push('/')
+      router.push('/home')
       setFile(null)
       setTitle("")
       setDescription("")
@@ -100,6 +113,40 @@ function VideoUpload() {
         >
           {isUploading ? "Uploading..." : "Upload Video"}
         </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button  className='btn btn-primary ml-3' >Get Code</button>
+          </DialogTrigger>
+          <DialogContent className="w-full h-full max-w-3xl mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
+            <div className='w-full h-full flex items-center justify-center'>
+              <DialogTitle>Get code Snippet</DialogTitle>
+            </div>
+            <div className="w-full h-full max-h-[600px] overflow-auto">
+            <CodeEditor generatedCode={`
+// A simple JavaScript program to interact with the user
+// Declare a variable
+let userName = prompt("What's your name?");
+// Function to greet the user
+function greetUser(name) {
+    alert("Hello, " + name + "! Welcome to the site.");
+}
+// Call the greetUser function
+greetUser(userName);
+// Create a loop that counts from 1 to 5 and logs the numbers
+console.log("Counting from 1 to 5:");
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+// Button event listener to change the background color when clicked
+document.getElementById("changeColorButton").addEventListener("click", function() {
+    document.body.style.backgroundColor = "lightblue";
+});`
+}/>
+
+            </div>
+            
+          </DialogContent>
+        </Dialog>
       </form>
     </div>
   );

@@ -3,6 +3,7 @@ import React,{useEffect,useState,useCallback} from 'react'
 import axios from 'axios'
 import { Video } from '@/types'
 import VideoCard from '@/components/videoCard'
+import CodeEditor from '@/components/CodeEditor'
 
 function Home() {
   const [videos, setVideos] = useState<Video[]>([])
@@ -64,6 +65,7 @@ function Home() {
                 />
             ))
           }
+          
         </div>
       )}
     </div>
