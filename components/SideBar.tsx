@@ -88,7 +88,7 @@ return (
 
         {/* Sidebar Header */}
         <div
-            className="flex items-center justify-center h-16 px-4 border-b cursor-pointer"
+            className="flex items-center justify-center h-16 px-4 border-b cursor-pointer mt-5"
             onClick={toggleSidebar}
         >
             <ImageIcon className="w-8 h-8 text-blue-600" />

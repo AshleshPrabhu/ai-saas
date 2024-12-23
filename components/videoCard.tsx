@@ -65,7 +65,7 @@ const VideoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
     };
     return (
         <div
-        className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300"
+        className="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         >
@@ -92,7 +92,7 @@ const VideoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
                 className="w-full h-full object-cover"
             />
             )}
-            <div className="absolute bottom-2 right-2 bg-base-100 bg-opacity-70 px-2 py-1 rounded-lg text-sm flex items-center">
+            <div className="absolute bottom-2 right-2 bg-white bg-opacity-70 px-2 py-1 rounded-lg text-sm flex items-center">
             <Clock size={16} className="mr-1" />
             {formatDuration(video.duration)}
             </div>
