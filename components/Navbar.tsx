@@ -2,10 +2,12 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
 import { Wand2, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'sonner';
 interface NavbarProps {
     onMenuToggle?: () => void;               
     isMenuOpen?: boolean;     
@@ -13,6 +15,15 @@ interface NavbarProps {
 }
 const Navbar: React.FC<NavbarProps> = ({  isUser=false,onMenuToggle, isMenuOpen }) => {
     const router = useRouter()
+    const handleSignOut = async () => {
+        const response = await axios.get("/api/user/logout");
+        if (response.status === 200) {
+        router.push("/login");
+        } else {
+        toast.error("Error signing out");
+        return;
+        }
+    };
 return (
     <header className="w-full py-6 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
     <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -143,7 +154,7 @@ return (
             }
             {
                 isUser ? (
-                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={()=>router.push('/login')}>
+                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={()=>handleSignOut}>
                         Logout
                     </Button>
                 ):(

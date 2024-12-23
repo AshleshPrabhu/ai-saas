@@ -11,7 +11,7 @@ return (
             <span className="text-xl font-bold">AImagine</span>
         </Link>
         <p className="text-blue-200">
-            Transform your media with cutting-edge AI technology
+            Transform your media with amazing AI technology provided by cloudinary
         </p>
         </div>
 

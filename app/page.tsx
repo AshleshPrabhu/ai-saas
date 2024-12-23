@@ -1,16 +1,18 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Video, Image as ImageIcon, Sparkles, Zap } from 'lucide-react';
+import { ArrowRight, Video, Image as ImageIcon, Sparkles, Zap, Code2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useState } from 'react';
 
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <Navbar onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen}/>
 
       <main className="flex-1">
         {/* Hero Section */}
@@ -21,10 +23,10 @@ export default function Home() {
               <span className="text-blue-600"> AI Magic</span>
             </h1>
             <p className="mt-6 text-xl text-muted-foreground max-w-2xl mx-auto">
-              Enhance your images and videos with cutting-edge AI effects. Create stunning content in seconds.
+              Enhance your images and videos with amazing AI effects provided by Cloudinary. Create stunning content in seconds and get code snippets for it
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/signup">
+              <Link href="/sign-up">
                 <Button size="lg" className="bg-blue-600 hover:bg-blue-700 gap-2">
                   Start Creating <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -60,6 +62,13 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-2">Smart Filters</h3>
                 <p className="text-muted-foreground">
                   AI-powered filters that adapt to your content.
+                </p>
+              </div>
+              <div className="bg-blue-50 p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                <Code2 className="h-12 w-12 text-blue-600 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Code Snippets</h3>
+                <p className="text-muted-foreground">
+                  Get cloudinary code snippets for your effects.
                 </p>
               </div>
             </div>
