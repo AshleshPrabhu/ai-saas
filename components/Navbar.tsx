@@ -61,7 +61,7 @@ return (
         }
         {
                 isUser ? (
-                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={()=>router.push('/login')}>
+                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={()=>handleSignOut}>
                         Logout
                     </Button>
                 ):(

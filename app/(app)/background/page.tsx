@@ -1,6 +1,8 @@
 "use client"
 import React,{useState,useEffect,useRef} from 'react'
 import { CldImage } from 'next-cloudinary';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const socialFormats = {
 "Instagram Square (1:1)": { width: 1080, height: 1080, aspectRatio: "1:1" },
@@ -25,7 +27,32 @@ const socialFormats = {
 
 const bgOptions={
     "Remove Background":"removeBackground",
+    "Color Background":"removeBackground background=`blueviolet`",
+    "Image Background":"removeBackground underlay=`Your Public ID`",
+    "Crop Background" : 
+        `crop={{
+        type: 'crop',
+        width: 400,
+        height: 400,
+        x: 80,
+        y: 350,
+        gravity: 'north_east',
+        source: true
+    }}`,
+    "Ai Fill":"fillBackground",
+    "Recolor":`recolor={['<Object>', '<Color>']}`,
+    "Ai Object Remove":`
+        remove={{
+            prompt: '<Object>',
+            removeShadow: true
+        }}
+    `,
+    "Ai Object Replace":`replace={['turtle', 'shark']}`,
+    "Ai replace BackGround":`replaceBackground="<Prompt>"`,
+    "Ai restore":`restore`,
+
 }
+const premium =["Remove Background","Color Background"]
 
 type SocialFormat = keyof typeof socialFormats
 type BgFormat = keyof typeof bgOptions
@@ -38,34 +65,47 @@ const [uploadedImage, setUploadedImage] = useState<string|null>(null)
 const [isUploading, setIsUploading] = useState(false)
 const [isTransforming, setIsTransforming] = useState(false)
 const imageRef = useRef<HTMLImageElement>(null);
+const [result, setResult] = useState(false)
+const [id, setId] = useState<string>("")
 useEffect(()=>{
     if(uploadedImage){
-    setIsTransforming(true)
+        setIsTransforming(true)
+        handleChange()
     }
 },[uploadedImage,selectedFormat]) 
+const getUserId = async () => {
+    const response = await axios.get("/api/get-token");
+    if (!response.data.success) {
+        toast.error("Failed to upload");
+    }
+    setId(response.data.decodedToken.id);
+};
+
+useEffect(() => {
+    getUserId(); // Call the async function inside useEffect
+}, []);
 
 const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const file = event.target.files?.[0];
-    if(!file) return
-    setIsUploading(true)
+    if (!file) return;
+    setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("userId", id);
+    console.log([...formData.entries()]);
     try {
-    const response = await fetch('/api/image-upload', {
-        method: 'POST',
-        body: formData
-    });
-    if(!response.ok){
-        throw new Error("failed to upload the image")
-    }
-    const uploadedImage = await response.json();
-    setUploadedImage(uploadedImage.publicId)
+        const response = await axios.post("/api/image-upload", formData);
+        console.log(response);
+        if (!response.data.success) {
+            throw new Error("failed to upload the image");
+        }
+        setUploadedImage(response.data.publicId);
     } catch (error) {
-    console.log("err in uploading",error)
-    alert("failed to upload image")
+        console.log("err in uploading",error)
+        toast.error("failed to upload image")
     }finally{
-    setIsUploading(false)
+        setIsUploading(false)
     }
 }
 
@@ -84,6 +124,17 @@ const handleDownload =()=>{
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a); 
     })
+}
+const handleError = (error:any) => {
+    console.error('Image transformation error:', error);
+};
+const handleChange=()=>{
+    console.log(bgFormat)
+    if(premium.includes(bgFormat.trim())){
+        alert("This is a premium feature , you cant access the feature but can access code for free")
+        return
+    }
+    setResult(true)
 }
 
 return (
@@ -105,6 +156,7 @@ return (
             className="file-input file-input-bordered file-input-primary w-full"
             />
         </div>
+        
 
         {isUploading && (
             <div className="mt-4">
@@ -118,9 +170,10 @@ return (
             <div className="form-control">
                 <select
                 className="select select-bordered w-full"
-                value={bgFormat}
-                onChange={(e) =>
+                value={selectedFormat}
+                onChange={(e) =>{
                     setSelectedFormat(e.target.value as SocialFormat)
+                }
                 }
                 >
                 {Object.keys(socialFormats).map((format) => (
@@ -135,7 +188,7 @@ return (
             <div className="form-control">
                 <select
                 className="select select-bordered w-full"
-                value={selectedFormat}
+                value={bgFormat}
                 onChange={(e) =>
                     setBgFormat(e.target.value as BgFormat)
                 }
@@ -147,6 +200,16 @@ return (
                 ))}
                 </select>
             </div>
+            <div className="card-actions mt-6 w-full flex justify-center">
+                <button className="btn btn-primary" onClick={handleChange}>
+                    Apply changes 
+                </button>
+            </div>
+            <div className="card-actions justify-center flex w-full mt-6">
+                <button className="btn btn-primary" onClick={handleDownload}>
+                    Get Code
+                </button>
+            </div>
 
             <div className="mt-6 relative">
                 <h3 className="text-lg font-semibold mb-2">Preview:</h3>
@@ -156,55 +219,67 @@ return (
                     <span className="loading loading-spinner loading-lg"></span>
                     </div>
                 )}
-        
-                <CldImage
-                    width={socialFormats[selectedFormat].width}
-                    height={socialFormats[selectedFormat].height}
-                    src={uploadedImage}
-                    sizes="100vw"
-                    alt="transformed image"
-                    crop="fill"  
-                    // overlays={[{
-                    //     publicId: uploadedImage,
-                    //     effects: [
-                    //       {
-                    //         crop: 'fill',
-                    //         gravity: 'auto',
-                    //         width: '1.0',
-                    //         height: '1.0',
-                    //       }
-                    //     ],
-                    //     flags: ['relative'],
-                    //     appliedEffects: [
-                    //       {
-                    //         multiply: true
-                    //       }
-                    //     ]
-                    //   }]}
-                    aspectRatio={socialFormats[selectedFormat].aspectRatio}
-                    replace={['human', 'shark']}
-                    // crop={{
-                    //     type: 'crop',
-                    //     width: 400,
-                    //     height: 400,
-                    //     x: 80,
-                    //     y: 350,
-                    //     gravity: 'north_east',
-                    //     source: true
-                    //   }}
-                    gravity='auto'
-                    ref={imageRef}
-                    fillBackground
-                    onLoad={() => setIsTransforming(false)}
-                    />
+                {
+                    result ? (
+                        <CldImage
+                            width={socialFormats[selectedFormat].width}
+                            height={socialFormats[selectedFormat].height}
+                            src={uploadedImage}
+                            sizes="100vw"
+                            alt="transformed image"
+                            crop="fill"  
+                            // overlays={[{
+                            //     publicId: uploadedImage,
+                            //     effects: [
+                            //       {
+                            //         crop: 'fill',
+                            //         gravity: 'auto',
+                            //         width: '1.0',
+                            //         height: '1.0',
+                            //       }
+                            //     ],
+                            //     flags: ['relative'],
+                            //     appliedEffects: [
+                            //       {
+                            //         multiply: true
+                            //       }
+                            //     ]
+                            //   }]}
+                            aspectRatio={socialFormats[selectedFormat].aspectRatio}
+                            replace={['human', 'shark']}
+                            // crop={{
+                            //     type: 'crop',
+                            //     width: 400,
+                            //     height: 400,
+                            //     x: 80,
+                            //     y: 350,
+                            //     gravity: 'north_east',
+                            //     source: true
+                            //   }}
+                            gravity='auto'
+                            ref={imageRef}
+                            fillBackground
+                            onLoad={() => setIsTransforming(false)}
+                            onError={()=>handleError}
+                        />
+                    ):(
+                        <div className='w-full text-3xl font-bold'>
+                            Apply changes to see the image Preview
+                        </div>
+                    )
+                }
                 </div>
             </div>
 
-            <div className="card-actions justify-end mt-6">
-                <button className="btn btn-primary" onClick={handleDownload}>
-                Download for {selectedFormat}
-                </button>
-            </div>
+            {
+                result && (
+                    <div className="card-actions justify-end mt-6">
+                        <button className="btn btn-primary" onClick={handleDownload}>
+                            Download for {selectedFormat}
+                        </button>
+                    </div>
+                )
+            }
             </div>
         )}
         </div>

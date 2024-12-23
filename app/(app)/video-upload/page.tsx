@@ -123,26 +123,55 @@ function VideoUpload() {
             </div>
             <div className="w-full h-full max-h-[600px] overflow-auto">
             <CodeEditor generatedCode={`
-// A simple JavaScript program to interact with the user
-// Declare a variable
-let userName = prompt("What's your name?");
-// Function to greet the user
-function greetUser(name) {
-    alert("Hello, " + name + "! Welcome to the site.");
-}
-// Call the greetUser function
-greetUser(userName);
-// Create a loop that counts from 1 to 5 and logs the numbers
-console.log("Counting from 1 to 5:");
-for (let i = 1; i <= 5; i++) {
-    console.log(i);
-}
-// Button event listener to change the background color when clicked
-document.getElementById("changeColorButton").addEventListener("click", function() {
-    document.body.style.backgroundColor = "lightblue";
-});`
-}/>
+import {getCldImageUrl,getCldVideoUrl} from "next-cloudinary"
 
+// to get the thumbnail of video using video's publicId(the id given by cloudinary after saving a video)
+
+const getThumbnailUrl = useCallback((publicId:string)=>{
+  return getCldImageUrl({
+    src:publicId,
+    width: 400, // customize accordingly
+    height: 225,
+    crop:"fill",
+    gravity:"auto", 
+    quality:"auto",
+    format:"jpg", 
+    assetType:"video"
+  })
+},[])
+
+// get the full video url (which can be used for downloading)
+
+const getFullVideoUrl = useCallback((publicId:string)=>{
+  return getCldVideoUrl({
+    src:publicId,
+    width: 1920,
+    height: 1080,
+  })
+},[])
+
+// to get the ai based preview of video(best part of the video)
+
+const getPreviewVideoUrl = useCallback((publicId:string)=>{
+  return getCldVideoUrl({
+    src:publicId,
+    width: 400,
+    height: 225,
+    rawTransformations: ["e_preview:duration_15:max_seg_9:min_seg_dur_1"]
+  })
+},[])
+
+// use it like this
+
+<video
+  src={getPreviewVideoUrl(video.publicId)} // for ai based preview
+  autoPlay
+  muted
+  loop
+  className=""
+/>
+`
+}/>
             </div>
             
           </DialogContent>

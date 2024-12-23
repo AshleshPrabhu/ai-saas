@@ -9,13 +9,18 @@ const isPublicPath = path === '/login' || path === '/sign-up' || path === '/'
 
 const token = request.cookies.get('token')?.value || ''
 
-if(isPublicPath && token) {
+if(isPublicPath && token && path!=='/') {
     return NextResponse.redirect(new URL('/', request.nextUrl))
 }
+if(isPublicPath && token && path==='/') {
+    return NextResponse.redirect(new URL('/home', request.nextUrl))
+}
+
 
 if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL('/login', request.nextUrl))
 }
+
 }
 
 // See "Matching Paths" below to learn more
