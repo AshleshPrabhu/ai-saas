@@ -119,7 +119,7 @@ function VideoUpload() {
           </DialogTrigger>
           <DialogContent className="w-full h-full max-w-3xl mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
             <div className='w-full h-full flex items-center justify-center'>
-              <DialogTitle>Get code Snippet</DialogTitle>
+              <DialogTitle>Code Snippet</DialogTitle>
             </div>
             <div className="w-full h-full max-h-[600px] overflow-auto">
             <CodeEditor generatedCode={`

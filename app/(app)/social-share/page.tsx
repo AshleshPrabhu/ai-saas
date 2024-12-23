@@ -3,6 +3,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { CldImage } from "next-cloudinary";
 import axios from "axios";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import CodeEditor from '@/components/CodeEditor'
 
 const socialFormats = {
   "Instagram Square (1:1)": { width: 1080, height: 1080, aspectRatio: "1:1" },
@@ -163,6 +173,41 @@ function SocialShare() {
                 <button className="btn btn-primary bg-blue-600 text-white hover:bg-blue-700" onClick={handleDownload}>
                   Download for {selectedFormat}
                 </button>
+              </div>
+              <div className="card-actions justify-end mt-6">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button  className='btn btn-primary ml-3' >Get Code</button>
+                </DialogTrigger>
+                <DialogContent className="w-full h-full max-w-3xl mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
+                  <div className='w-full h-full flex items-center justify-center'>
+                    <DialogTitle>Code Snippet</DialogTitle>
+                  </div>
+                  <div className="w-full h-full max-h-[600px] overflow-auto">
+            <CodeEditor generatedCode={`
+import {CldImage} from "next-cloudinary"
+// social formats refers to array of different formats 
+const socialFormats = {
+  "Instagram Square (1:1)": { width: 1080, height: 1080, aspectRatio: "1:1" },
+  "Instagram Portrait (4:5)": { width: 1080, height: 1350, aspectRatio: "4:5" },
+}
+<CldImage
+  width={socialFormats[selectedFormat].width}
+  height={socialFormats[selectedFormat].height}
+  src={uploadedImage} // the url obtained after uploading from cloudinary
+  sizes="100vw"
+  alt="transformed image"
+  crop="fill"
+  aspectRatio={socialFormats[selectedFormat].aspectRatio}
+  gravity="auto"
+  ref={imageRef} // reference to the image
+/>
+`
+}/>
+                </div>
+                
+                </DialogContent>
+                </Dialog>
               </div>
             </div>
           )}

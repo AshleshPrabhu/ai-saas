@@ -3,6 +3,67 @@ import React,{useState,useEffect,useRef} from 'react'
 import { CldImage } from 'next-cloudinary';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import CodeEditor from '@/components/CodeEditor'
+function getDynamicProps(
+    bgFormat: BgFormat,
+    object: string = "",
+    color: string = "",
+    prompt: string = "",
+    replace1: string = "",
+    replace2: string = ""
+) {
+    switch (bgFormat) {
+        case "Remove Background":
+            return { removeBackground: true };
+        case "Color Background":
+            return { removeBackground: true, background: "blueviolet" };
+        case "Image Background":
+            return { removeBackground: true, underlay: "Your Public ID" };
+        // case "Crop Background":
+        //     return {
+        //         crop: {
+        //             type: "crop", // Ensure this matches the expected literal type
+        //             width: 400,
+        //             height: 400,
+        //             x: 80,
+        //             y: 350,
+        //             gravity: "north_east",
+        //             source: true,
+        //         },
+        //     };
+        case "Ai Fill":
+            return { fillBackground: true };
+        case "Recolor":
+            return { recolor: [object,color] };
+        case "Ai Object Remove":
+            return {
+                remove: {
+                    prompt: object,
+                },
+            };
+        case "Ai Object Replace":
+            return { replace: [replace1, replace2] };
+        case "Ai replace BackGround":
+            return { replaceBackground: prompt };
+        case "Ai restore":
+            return { restore: true };
+        default:
+            return {};
+    }
+}
+
+
 
 const socialFormats = {
 "Instagram Square (1:1)": { width: 1080, height: 1080, aspectRatio: "1:1" },
@@ -26,47 +87,40 @@ const socialFormats = {
 };
 
 const bgOptions={
-    "Remove Background":"removeBackground",
-    "Color Background":"removeBackground background=`blueviolet`",
-    "Image Background":"removeBackground underlay=`Your Public ID`",
-    "Crop Background" : 
-        `crop={{
-        type: 'crop',
-        width: 400,
-        height: 400,
-        x: 80,
-        y: 350,
-        gravity: 'north_east',
-        source: true
-    }}`,
-    "Ai Fill":"fillBackground",
-    "Recolor":`recolor={['<Object>', '<Color>']}`,
-    "Ai Object Remove":`
-        remove={{
-            prompt: '<Object>',
-            removeShadow: true
-        }}
-    `,
-    "Ai Object Replace":`replace={['turtle', 'shark']}`,
-    "Ai replace BackGround":`replaceBackground="<Prompt>"`,
-    "Ai restore":`restore`,
+    "Remove Background":"",
+    "Color Background":"",
+    "Image Background":"",
+    "Crop Background" : "",
+    "Ai Fill":"",
+    "Recolor":"",
+    "Ai Object Remove":"",
+    "Ai Object Replace":"",
+    "Ai replace BackGround":"",
+    "Ai restore":"",
 
 }
-const premium =["Remove Background","Color Background"]
+const premium =["Remove Background","Color Background","Image Background"]
+const valueArray =["Recolor","Ai Object Remove","Ai Object Replace","Ai replace BackGround"]
 
 type SocialFormat = keyof typeof socialFormats
 type BgFormat = keyof typeof bgOptions
 
 
-function SocialShare() {
+function Background() {
 const [selectedFormat, setSelectedFormat] = useState<SocialFormat>("Instagram Square (1:1)")
-const [bgFormat, setBgFormat] = useState<BgFormat>("Remove Background")
+const [bgFormat, setBgFormat] = useState<BgFormat>("Ai Fill")
 const [uploadedImage, setUploadedImage] = useState<string|null>(null)
 const [isUploading, setIsUploading] = useState(false)
 const [isTransforming, setIsTransforming] = useState(false)
 const imageRef = useRef<HTMLImageElement>(null);
 const [result, setResult] = useState(false)
 const [id, setId] = useState<string>("")
+const [object, setObject] = useState<string>("")
+const [color, setColor] = useState<string>("")
+const [prompt, setPrompt] = useState<string>("")
+const [replace1, setReplace1] = useState<string>("")
+const [replace2, setReplace2] = useState<string>("")
+const [show, setShow] = useState(false)
 useEffect(()=>{
     if(uploadedImage){
         setIsTransforming(true)
@@ -136,6 +190,9 @@ const handleChange=()=>{
     }
     setResult(true)
 }
+const handleClick=()=>{
+    setShow(true)
+}
 
 return (
     <div className="container mx-auto p-4 max-w-4xl">
@@ -200,15 +257,136 @@ return (
                 ))}
                 </select>
             </div>
-            <div className="card-actions mt-6 w-full flex justify-center">
-                <button className="btn btn-primary" onClick={handleChange}>
-                    Apply changes 
-                </button>
-            </div>
+            {
+                !valueArray.includes(bgFormat) && (
+                    <div className="card-actions mt-6 w-full flex justify-center">
+                        <button className="btn btn-primary" onClick={handleChange}>
+                            Apply changes 
+                        </button>
+                    </div>
+                )
+            }
+            {
+                bgFormat==="Ai replace BackGround" && (
+                    <div className="card-actions mt-6 w-full flex justify-center items-center">
+                        <Input
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        placeholder='enter prompt to replace'
+                        className='rounded-lg '
+                        />
+                        <Button onClick={handleClick}>
+                            Enter
+                        </Button>
+                    </div>
+                )
+            }
+            {
+                bgFormat==="Ai Object Remove" && (
+                    <div className="card-actions mt-6 w-full flex justify-center items-center">
+                        <Input
+                        value={object}
+                        onChange={(e) => setObject(e.target.value)}
+                        placeholder='enter object to remove'
+                        className='rounded-lg '
+                        />
+                        <Button onClick={handleClick}>
+                            Enter
+                        </Button>
+                    </div>
+                )
+            }
+            {
+                bgFormat==="Recolor" && (
+                    <div className="card-actions mt-6 w-full flex justify-center items-center">
+                        <Input
+                        value={color}
+                        onChange={(e) => setColor(e.target.value)}
+                        placeholder='enter color'
+                        className='rounded-lg '
+                        />
+                        <Input
+                        value={object}
+                        onChange={(e) => setObject(e.target.value)}
+                        placeholder='enter object to color'
+                        className='rounded-lg '
+                        />
+                        <Button onClick={handleClick}>
+                            Enter
+                        </Button>
+                    </div>
+                )
+            }
+            {
+                bgFormat==="Ai Object Replace" && (
+                    <div className="card-actions mt-6 w-full flex justify-center items-center">
+                        <Input
+                        value={replace1}
+                        onChange={(e) => setReplace1(e.target.value)}
+                        placeholder='replace what ?'
+                        className='rounded-lg '
+                        />
+                        <Input
+                        value={replace2}
+                        onChange={(e) => setReplace2(e.target.value)}
+                        placeholder='replace with'
+                        className='rounded-lg '
+                        />
+                        <Button onClick={handleClick}>
+                            Enter
+                        </Button>
+                    </div>
+                )
+            }
+            {
+                show && (
+                    <div className="card-actions mt-6 w-full flex justify-center">
+                        <button className="btn btn-primary" onClick={handleChange}>
+                            Apply changes 
+                        </button>
+                    </div>
+                )
+            }
+
+
             <div className="card-actions justify-center flex w-full mt-6">
-                <button className="btn btn-primary" onClick={handleDownload}>
-                    Get Code
-                </button>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <button  className='btn btn-primary ml-3' >Get Code</button>
+                </DialogTrigger>
+                <DialogContent className="w-full h-full max-w-3xl mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
+                    <div className='w-full h-full flex items-center justify-center'>
+                        <DialogTitle>Code Snippet</DialogTitle>
+                    </div>
+                <div className="w-full h-full max-h-[600px] overflow-auto">
+            <CodeEditor generatedCode={`
+import {CldImage} from "next-cloudinary"
+// bgFormat is the state defined to hold the choice choosen by user
+const [bgFormat, setBgFormat] = useState<BgFormat>("Ai Fill")
+// BgFormat is object (keys=> different methods ,values=>"")
+<CldImage
+    width={socialFormats[selectedFormat].width}
+    height={socialFormats[selectedFormat].height}
+    src={uploadedImage} // url returned from cloudinary
+    sizes="100vw"
+    alt="transformed image"
+    aspectRatio={socialFormats[selectedFormat].aspectRatio}
+    ref={imageRef}
+    fillBackground={bgFormat === "Ai Fill"} // Apply 'fillBackground' when bgFormat is "Ai Fill"
+    replace={bgFormat === "Ai Object Replace" ? ['what to replace', 'with what to replace'] : undefined} // Apply 'replace' when bgFormat is "Ai Object Replace"
+    removeBackground={bgFormat === "Ai Object Remove" || bgFormat === "Remove Background"} // Apply 'removeBackground' when bgFormat is "Ai Object Remove"
+    recolor={bgFormat === "Ai Recolor" ? ["blue", "red"] : undefined} // Example of applying recolor
+    remove={bgFormat === "Ai Object Remove" ? { prompt: "object", removeShadow: true } : undefined} // Remove background
+    crop={bgFormat === "Crop" ? { type: "crop", width: 100, height: 100, x: 0, y: 0, gravity: "auto", source: true } : undefined} // Example of applying crop
+    onLoad={() => setIsTransforming(false)}
+    onError={handleError}
+/>
+`
+}/>
+                </div>
+                
+                </DialogContent>
+                </Dialog>
             </div>
 
             <div className="mt-6 relative">
@@ -227,41 +405,16 @@ return (
                             src={uploadedImage}
                             sizes="100vw"
                             alt="transformed image"
-                            crop="fill"  
-                            // overlays={[{
-                            //     publicId: uploadedImage,
-                            //     effects: [
-                            //       {
-                            //         crop: 'fill',
-                            //         gravity: 'auto',
-                            //         width: '1.0',
-                            //         height: '1.0',
-                            //       }
-                            //     ],
-                            //     flags: ['relative'],
-                            //     appliedEffects: [
-                            //       {
-                            //         multiply: true
-                            //       }
-                            //     ]
-                            //   }]}
                             aspectRatio={socialFormats[selectedFormat].aspectRatio}
-                            replace={['human', 'shark']}
-                            // crop={{
-                            //     type: 'crop',
-                            //     width: 400,
-                            //     height: 400,
-                            //     x: 80,
-                            //     y: 350,
-                            //     gravity: 'north_east',
-                            //     source: true
-                            //   }}
-                            gravity='auto'
                             ref={imageRef}
-                            fillBackground
+                            // gravity="auto"
+                            // fillBackground={bgFormat === "Ai Fill"}
+                            // replace={bgFormat === "Ai Object Replace" ? [replace1, replace2] : undefined}
+                            {...getDynamicProps(bgFormat,object,color,prompt,replace1,replace2)} // Dynamically apply other props
                             onLoad={() => setIsTransforming(false)}
-                            onError={()=>handleError}
+                            onError={handleError}
                         />
+
                     ):(
                         <div className='w-full text-3xl font-bold'>
                             Apply changes to see the image Preview
@@ -288,4 +441,4 @@ return (
 );
 }
 
-export default SocialShare
+export default Background
