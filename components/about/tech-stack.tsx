@@ -32,7 +32,7 @@ return (
         Technology Stack
         </h2>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {technologies.map((tech, index) => (
             <Card
             key={tech.title}
