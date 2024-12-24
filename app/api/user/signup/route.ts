@@ -10,12 +10,15 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { name, password, email } = reqBody;
+    if(!name || !password ||!email){
+      return NextResponse.json({error:"please fill all fields",success:false },{status:200})
+    }
     console.log(reqBody);
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
     if (existingUser) {
-      return NextResponse.json({ error: "User already exists",success:false }, { status: 400 });
+      return NextResponse.json({ error: "User already exists",success:false }, { status: 200 });
     }
 
     const salt = await bcryptjs.genSalt(10);
@@ -42,6 +45,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     // Handle any unexpected errors
+    console.log(error)
     return NextResponse.json({ error: error.message,success:false }, { status: 500 });
   }finally{
     await prisma.$disconnect()

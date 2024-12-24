@@ -48,6 +48,7 @@ export default function Login() {
                 }
             ) ;
             if(response.data.success===false){
+                console.log(response.data)
                 toast.error(response.data.error)
                 return
             }
@@ -124,7 +125,7 @@ return (
 
             <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{' '}
-            <Link href="/signup" className="text-primary hover:text-primary/90">
+            <Link href="/sign-up" className="text-primary hover:text-primary/90">
                 Sign up
             </Link>
             </p>

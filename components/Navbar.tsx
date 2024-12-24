@@ -61,7 +61,7 @@ return (
         }
         {
                 isUser ? (
-                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={()=>handleSignOut}>
+                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={handleSignOut}>
                         Logout
                     </Button>
                 ):(
@@ -154,7 +154,7 @@ return (
             }
             {
                 isUser ? (
-                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={()=>handleSignOut}>
+                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={handleSignOut}>
                         Logout
                     </Button>
                 ):(

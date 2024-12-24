@@ -11,7 +11,8 @@ export const POST = async(request:NextRequest)=>{
         const user = await prisma.user.findUnique({
             where:{id},
             include: {
-                videos: true, 
+                videos: true,
+                order:true 
             },
         })
         if(!user) 
