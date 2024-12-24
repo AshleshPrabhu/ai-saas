@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Wand2 } from 'lucide-react';
+import { Loader2, Wand2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -17,6 +17,7 @@ interface FormData {
 
 export default function Signup() {
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState<FormData>({
         name: '',
         email: '',
@@ -27,6 +28,7 @@ export default function Signup() {
         e.preventDefault();
     
         try {
+            setLoading(true)
             const { name, email, password } = formData;
         
             // Basic email validation
@@ -64,6 +66,8 @@ export default function Signup() {
         } catch (error) {
             console.log(error)
             toast.error("failed to signup")
+        }finally{
+            setLoading(false)
         }
     };
     
@@ -134,7 +138,11 @@ return (
             </div>
 
             <Button type="submit" className="w-full">
-            Create account
+            {loading?(
+                <Loader2/>
+            ):(
+                <div>Create Account</div>
+            )}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">

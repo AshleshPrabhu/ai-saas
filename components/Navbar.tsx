@@ -1,9 +1,8 @@
-// components/Navbar.jsx
 'use client';
 
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
-import { Wand2, Menu } from 'lucide-react';
+import { Wand2, Menu, LogOut, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -14,14 +13,22 @@ interface NavbarProps {
     isUser?: boolean
 }
 const Navbar: React.FC<NavbarProps> = ({  isUser=false,onMenuToggle, isMenuOpen }) => {
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
     const handleSignOut = async () => {
-        const response = await axios.get("/api/user/logout");
-        if (response.status === 200) {
-        router.push("/login");
-        } else {
-        toast.error("Error signing out");
-        return;
+        try {
+            const response = await axios.get("/api/user/logout");
+            if (response.status === 200) {
+            router.push("/login");
+            } else {
+            toast.error("Error signing out");
+            return;
+            }
+        } catch (error) {
+            console.log("logout error")
+            toast.error("failed to logout")
+        } finally{
+            setLoading(false)
         }
     };
 return (
@@ -62,7 +69,11 @@ return (
         {
                 isUser ? (
                     <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={handleSignOut}>
-                        Logout
+                        {loading?(
+                            <Loader2/>
+                        ):(
+                            <div>Sign out</div>
+                        )}
                     </Button>
                 ):(
                     <Link href="/sign-up">
@@ -155,7 +166,11 @@ return (
             {
                 isUser ? (
                     <Button className="w-full bg-white text-blue-600 hover:bg-blue-50" onClick={handleSignOut}>
-                        Logout
+                        {loading?(
+                            <Loader2/>
+                        ):(
+                            <div>Sign out</div>
+                        )}
                     </Button>
                 ):(
                     <Link href="/signup">

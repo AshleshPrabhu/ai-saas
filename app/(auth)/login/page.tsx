@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import axios from 'axios';
-import { Wand2 } from 'lucide-react';
+import { Loader2, Wand2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -17,6 +17,7 @@ interface FormData {
 
 export default function Login() {
     const router =useRouter()
+    const [loading, setLoading] = useState(false)
     const [formData,setFormData] = useState<FormData>({
         email : '',
         password : ''
@@ -24,6 +25,7 @@ export default function Login() {
     const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         try {
+            setLoading(true)
             const { email, password } = formData;
         
             // Basic email validation
@@ -57,6 +59,8 @@ export default function Login() {
         } catch (error) {
             toast.error("failed to login")
             console.log(error)
+        }finally{
+            setLoading(false)
         }
 
     }
@@ -120,7 +124,11 @@ return (
             </div>
 
             <Button type="submit" className="w-full">
-            Sign in
+            {loading?(
+                <Loader2/>
+            ):(
+                <div>Sign in</div>
+            )}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">

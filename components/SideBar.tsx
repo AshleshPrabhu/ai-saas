@@ -10,7 +10,8 @@ Image,
 ImageIcon,
 Home,
 ChevronRight,
-ChevronLeft, // Close arrow icon
+ChevronLeft,
+Loader2, // Close arrow icon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -27,6 +28,7 @@ const sidebarItems = [
 
 function SideBar() {
 const [sidebarOpen, setSidebarOpen] = useState(false);
+const [loading, setLoading] = useState(false)
 const pathname = usePathname();
 const router = useRouter();
 const [user, setUser] = useState<{ name: string; email: string }>({
@@ -53,12 +55,20 @@ useEffect(() => {
 }, []);
 
 const handleSignOut = async () => {
-    const response = await axios.get("/api/user/logout");
-    if (response.status === 200) {
-    router.push("/login");
-    } else {
-    toast.error("Error signing out");
-    return;
+    try {
+        setLoading(true);
+        const response = await axios.get("/api/user/logout");
+        if (response.status === 200) {
+            router.push("/login");
+        } else {
+            toast.error("Error signing out");
+            return;
+        }
+    } catch (error) {
+        console.log("logout error")
+        toast.error("failed to logout")
+    } finally{
+        setLoading(false);
     }
 };
 
@@ -120,8 +130,14 @@ return (
                 variant="outline"
                 className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
             >
-                <LogOut className="w-5 h-5 mr-3" />
-                Sign Out
+                {loading?(
+                    <Loader2/>
+                ):(
+                    <>
+                        <LogOut className="w-5 h-5 mr-3" />
+                        Sign Out
+                    </>
+                )}
             </Button>
             </div>
         )}
