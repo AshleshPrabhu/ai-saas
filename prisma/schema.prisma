@@ -31,9 +31,38 @@ model Video {
 //  npx prisma generate
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  name     String
-  videos   Video[]
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  videos    Video[]
+  isPaid    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order[]
+}
+
+enum Plan {
+  free
+  fullpremium
+  onepremium
+}
+
+enum OrderStatus {
+  pending
+  success
+  failed
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  userId     String
+  User       User        @relation(fields: [userId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  plan       Plan
+  expiresAt  DateTime
+  razorpayId String      @unique
+  status     OrderStatus @default(pending)
+  amount     Float
 }

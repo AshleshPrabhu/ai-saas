@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import axios from "axios"
 import { Check } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 const tiers = [
 {
@@ -49,19 +51,40 @@ const tiers = [
     "Priority support",
     "Get free code"
     ],
-    buttonText: "Start Trial",
+    buttonText: "Subscribe now",
 }
 ]
 
 export function PricingTiers() {
 const router = useRouter()
 const [hoveredTier, setHoveredTier] = useState<string | null>(null)
+const [id, setId] = useState<string>("")
+const getUserId = async () => {
+    const response = await axios.get("/api/get-token");
+    if (!response.data.success) {
+        toast.error("Failed to upload");
+    }
+    setId(response.data.decodedToken.id);
+};
+
+useEffect(() => {
+    getUserId(); // Call the async function inside useEffect
+}, []);
 
 const handlePlanSelect = (tier: string) => {
     if (tier === "Free") {
-    router.push("/login")
+        if(id===""){
+            router.push("/login")   
+        }else{
+            router.push("/home")
+        }
+
     } else {
-    router.push("/login?redirect=/checkout")
+        if(id===""){
+            router.push("/login")
+        }else{
+
+        }
     }
 }
 
