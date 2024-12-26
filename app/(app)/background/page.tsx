@@ -121,12 +121,6 @@ const [prompt, setPrompt] = useState<string>("")
 const [replace1, setReplace1] = useState<string>("")
 const [replace2, setReplace2] = useState<string>("")
 const [show, setShow] = useState(false)
-useEffect(()=>{
-    if(uploadedImage){
-        setIsTransforming(true)
-        handleChange()
-    }
-},[uploadedImage,selectedFormat]) 
 const getUserId = async () => {
     const response = await axios.get("/api/get-token");
     if (!response.data.success) {
@@ -189,6 +183,7 @@ const handleChange=()=>{
         return
     }
     setResult(true)
+    setIsTransforming(true)
 }
 const handleClick=()=>{
     setShow(true)
@@ -230,6 +225,8 @@ return (
                 value={selectedFormat}
                 onChange={(e) =>{
                     setSelectedFormat(e.target.value as SocialFormat)
+                    setShow(false)
+                    setResult(false)
                 }
                 }
                 >
@@ -246,9 +243,11 @@ return (
                 <select
                 className="select select-bordered w-full"
                 value={bgFormat}
-                onChange={(e) =>
+                onChange={(e) =>{
                     setBgFormat(e.target.value as BgFormat)
-                }
+                    setShow(false)
+                    setResult(false)
+                }}
                 >
                 {Object.keys(bgOptions).map((option) => (
                     <option key={option} value={option}>
@@ -425,7 +424,7 @@ const [bgFormat, setBgFormat] = useState<BgFormat>("Ai Fill")
             </div>
 
             {
-                result && (
+                result && !isTransforming && (
                     <div className="card-actions justify-end mt-6">
                         <button className="btn btn-primary" onClick={handleDownload}>
                             Download for {selectedFormat}
