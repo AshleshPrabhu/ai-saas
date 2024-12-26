@@ -89,6 +89,8 @@ export function PricingTiers() {
     }, []);
     const handlePayment = async (plan: string, amount: number) => {
         try {
+            if(plan==="Premium") plan="fullpremium"
+            if(plan==="Trial Premium") plan="onepremium"
         const response = await axios.post("/api/order", {
             plan,
             amount,
@@ -104,7 +106,7 @@ export function PricingTiers() {
         const order = response.data.order;
     
         const options = {
-            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "", // Public Key
+            key: process.env.KEY_ID || "", // Public Key
             amount: order.amount,
             currency: "INR",
             name: "Acme Corp",

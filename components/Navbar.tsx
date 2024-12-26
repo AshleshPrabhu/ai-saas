@@ -52,7 +52,7 @@ return (
         <Link href="#features" className="hover:text-blue-100 transition-colors">
             Features
         </Link>
-        <Link href="#pricing" className="hover:text-blue-100 transition-colors">
+        <Link href="/pricing" className="hover:text-blue-100 transition-colors">
             Pricing
         </Link>
         {
@@ -94,7 +94,7 @@ return (
             <Link href="#features" className="w-full flex items-center justify-center hover:text-blue-100 transition-colors">
                 Features
             </Link>
-            <Link href="#pricing" className="w-full flex items-center justify-center hover:text-blue-100 transition-colors">
+            <Link href="/pricing" className="w-full flex items-center justify-center hover:text-blue-100 transition-colors">
                 Pricing
             </Link>
             {

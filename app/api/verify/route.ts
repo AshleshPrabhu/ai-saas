@@ -17,12 +17,12 @@ try {
     }
 
     // Verify Razorpay signature
-    if (!process.env.RAZORPAY_KEY_SECRET) {
+    if (!process.env.KEY_SECRET) {
         throw new Error("RAZORPAY_KEY_SECRET environment variable is not defined");
     }
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+    .createHmac("sha256", process.env.KEY_SECRET)
     .update(body.toString())
     .digest("hex");
 
@@ -74,6 +74,6 @@ try {
     { status: 500 }
     );
 } finally{
-    await prisma.$disconnect
+    await prisma.$disconnect()
 }
 };

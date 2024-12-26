@@ -19,7 +19,7 @@ return (
         <h3 className="font-semibold mb-4">Product</h3>
         <ul className="space-y-2 text-blue-200">
             <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
-            <li><Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+            <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
             <li><Link href="#examples" className="hover:text-white transition-colors">Examples</Link></li>
         </ul>
         </div>
