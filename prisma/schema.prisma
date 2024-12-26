@@ -40,6 +40,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   order     Order[]
+  images    String[] @default([])
 }
 
 enum Plan {

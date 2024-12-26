@@ -63,6 +63,7 @@ interface User {
     order:{
         plan:string
     }
+    images:string[]
 }
 
 export function PricingTiers() {

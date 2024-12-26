@@ -104,7 +104,15 @@ const valueArray =["Recolor","Ai Object Remove","Ai Object Replace","Ai replace 
 
 type SocialFormat = keyof typeof socialFormats
 type BgFormat = keyof typeof bgOptions
-
+interface User {
+    email:string   
+    name:string
+    videos: object
+    isPaid:boolean
+    order:{
+        plan:string
+    }
+}
 
 function Background() {
 const [selectedFormat, setSelectedFormat] = useState<SocialFormat>("Instagram Square (1:1)")
@@ -120,13 +128,22 @@ const [color, setColor] = useState<string>("")
 const [prompt, setPrompt] = useState<string>("")
 const [replace1, setReplace1] = useState<string>("")
 const [replace2, setReplace2] = useState<string>("")
+const [user, setUser] = useState<User>()
 const [show, setShow] = useState(false)
 const getUserId = async () => {
     const response = await axios.get("/api/get-token");
     if (!response.data.success) {
         toast.error("Failed to upload");
+        return;
     }
     setId(response.data.decodedToken.id);
+    const user = await axios.post("/api/user",{id:response.data.decodedToken.id})
+    if(!user.data.user){
+        toast.error("Failed to upload")
+        return
+    }
+    setUser(user.data.user)
+
 };
 
 useEffect(() => {
@@ -176,11 +193,17 @@ const handleDownload =()=>{
 const handleError = (error:any) => {
     console.error('Image transformation error:', error);
 };
-const handleChange=()=>{
+const handleChange=async()=>{
     console.log(bgFormat)
     if(premium.includes(bgFormat.trim())){
         alert("This is a premium feature , you cant access the feature but can access code for free")
         return
+    }
+    if(user?.isPaid){
+        const res = await axios.post("/api/add-image",{userId:id,img:uploadedImage})
+        if(!res.data.success){
+            toast.error("Failed to add image")
+        }
     }
     setResult(true)
     setIsTransforming(true)
