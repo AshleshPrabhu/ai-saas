@@ -45,5 +45,7 @@ export const POST = async(request : NextRequest)=>{
     } catch (error) {
         console.log("create order error",error)
         return NextResponse.json({error:"failed to create order",success:false},{status:500})
+    } finally{
+        await prisma.$disconnect()
     }
 }

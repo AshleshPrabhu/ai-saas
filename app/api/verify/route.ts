@@ -73,5 +73,7 @@ try {
     { error: "An error occurred during payment verification", success: false },
     { status: 500 }
     );
+} finally{
+    await prisma.$disconnect
 }
 };
