@@ -55,6 +55,16 @@ const tiers = [
 }
 ]
 
+interface User {
+    email:string   
+    name:string
+    videos: object
+    isPaid:boolean
+    order:{
+        plan:string
+    }
+}
+
 export function PricingTiers() {
     const  loadScript =(src:string)=>{
         return new Promise((resolve)=>{
@@ -76,12 +86,18 @@ export function PricingTiers() {
     const router = useRouter()
     const [hoveredTier, setHoveredTier] = useState<string | null>(null)
     const [id, setId] = useState<string>("")
+    const [user, setUser] = useState<User>()
     const getUserId = async () => {
         const response = await axios.get("/api/get-token");
         if (!response.data.success) {
             toast.error("Failed to upload");
         }
         setId(response.data.decodedToken.id);
+        const userres = await axios.post("/api/user",{id:response.data.decodedToken.id})
+        if (!userres.data.success) {
+            toast.error("Failed to fetch user");
+        }
+        setUser(userres.data.user)
     };
 
     useEffect(() => {
@@ -161,6 +177,7 @@ export function PricingTiers() {
 
     return (
         <section className="py-24">
+            
         <div className="container">
             <div className="grid gap-8 md:grid-cols-3">
             {tiers.map((tier) => (
@@ -207,14 +224,21 @@ export function PricingTiers() {
                     </div>
                     
                     <Button 
-                    onClick={() => handlePlanSelect(tier)}
-                    className={`w-full transition-colors duration-300 ${
-                        hoveredTier === tier.name
-                        ? "bg-blue-600 hover:bg-blue-700 text-white" 
-                        : "bg-blue-100 hover:bg-blue-200 text-blue-600"
-                    }`}
+                        onClick={() => handlePlanSelect(tier)} 
+                        className={`w-full transition-colors duration-300 
+                            ${hoveredTier === tier.name 
+                                ? "bg-blue-600 hover:bg-blue-700 text-white" 
+                                : "bg-blue-100 hover:bg-blue-200 text-blue-600"} 
+                            ${user && user.isPaid && tier.name !== user.order.plan ? "opacity-50 cursor-not-allowed" : ""}`}
+                        disabled={user && user.isPaid && tier.name !== user.order.plan}  // Disable button for other plans
                     >
-                    {tier.buttonText}
+                        {
+                            user && user.isPaid && tier.name === user.order.plan ? (
+                                <div>Continue</div> // Show "Continue" button if they are on the paid plan
+                            ) : (
+                                <div>{tier.buttonText}</div> // Show regular button text for other cases
+                            )
+                        }
                     </Button>
                 </Card>
                 </div>

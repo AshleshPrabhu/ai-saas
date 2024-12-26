@@ -7,8 +7,7 @@ export function PricingHeader() {
             Choose Your Plan
             </h1>
             <p className="text-lg text-gray-700">
-            Select the perfect plan for your video editing needs. 
-            Upgrade or downgrade anytime.
+            Select the perfect plan for your video , image editing needs. You can change plans only after completion of previous plan.
             </p>
         </div>
         </div>
