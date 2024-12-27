@@ -7,6 +7,8 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useState } from 'react';
+import before from "@/public/before.png"
+import after from "@/public/after.png"
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
@@ -31,9 +33,11 @@ export default function Home() {
                   Start Creating <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="border-blue-200 hover:bg-blue-50">
-                View Examples
-              </Button>
+              <Link href="/examples">
+                <Button size="lg" variant="outline" className="border-blue-200 hover:bg-blue-50">
+                  View Examples
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -82,7 +86,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="relative h-[400px] rounded-xl overflow-hidden shadow-lg">
                 <Image
-                  src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+                  src={before}
                   alt="Before"
                   fill
                   className="object-cover"
@@ -93,7 +97,7 @@ export default function Home() {
               </div>
               <div className="relative h-[400px] rounded-xl overflow-hidden shadow-lg">
                 <Image
-                  src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80"
+                  src={after}
                   alt="After"
                   fill
                   className="object-cover"

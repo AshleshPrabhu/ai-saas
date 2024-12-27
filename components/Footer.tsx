@@ -18,9 +18,9 @@ return (
         <div>
         <h3 className="font-semibold mb-4">Product</h3>
         <ul className="space-y-2 text-blue-200">
-            <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
+            <li><Link href="/features" className="hover:text-white transition-colors">Features</Link></li>
             <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-            <li><Link href="#examples" className="hover:text-white transition-colors">Examples</Link></li>
+            <li><Link href="/examples" className="hover:text-white transition-colors">Examples</Link></li>
         </ul>
         </div>
 
@@ -36,14 +36,11 @@ return (
         <div>
         <h3 className="font-semibold mb-4">Connect</h3>
         <div className="flex gap-4">
-            <Link href="#" className="hover:text-blue-200 transition-colors">
-            <i className="fa-brands fa-github h-5 w-5"></i>
+            <Link href="https://github.com/AshleshPrabhu" target='_blank' className="hover:text-blue-200 transition-colors">
+                <i className="fa-brands fa-github h-5 w-5"></i>
             </Link>
-            <Link href="#" className="hover:text-blue-200 transition-colors">
-            <i className="fa-brands fa-twitter h-5 w-5"></i>
-            </Link>
-            <Link href="#" className="hover:text-blue-200 transition-colors">
-            <i className="fa-brands fa-linkedin h-5 w-5"></i>
+            <Link href="https://www.linkedin.com/in/ashlesh-prabhu-bb457b312/" target='_blank' className="hover:text-blue-200 transition-colors">
+                <i className="fa-brands fa-linkedin h-5 w-5"></i>
             </Link>
         </div>
         </div>

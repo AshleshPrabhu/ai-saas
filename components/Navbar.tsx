@@ -49,7 +49,7 @@ return (
 
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center gap-8">
-        <Link href="#features" className="hover:text-blue-100 transition-colors">
+        <Link href="/features" className="hover:text-blue-100 transition-colors">
             Features
         </Link>
         <Link href="/pricing" className="hover:text-blue-100 transition-colors">
@@ -91,7 +91,7 @@ return (
         {isMenuOpen  && (
         <div className="absolute top-20 left-0 right-0 bg-blue-600 p-4 md:hidden z-50">
             <nav className="flex flex-col gap-4">
-            <Link href="#features" className="w-full flex items-center justify-center hover:text-blue-100 transition-colors">
+            <Link href="/features" className="w-full flex items-center justify-center hover:text-blue-100 transition-colors">
                 Features
             </Link>
             <Link href="/pricing" className="w-full flex items-center justify-center hover:text-blue-100 transition-colors">
