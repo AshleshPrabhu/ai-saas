@@ -173,8 +173,15 @@ const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsUploading(false)
     }
 }
+const handleAdd = async()=>{
+    if(!imageRef.current) return
+    const res = await axios.post("/api/add-image",{userId:id,img:imageRef.current?.src})
+    if(!res.data.success){
+        toast.error("Failed to add image")
+    }
+}
 
-const handleDownload =()=>{
+const handleDownload =async()=>{
     if(!imageRef.current) return
     // url ->binary obj ->create a url from it
     fetch(imageRef.current.src)
@@ -200,54 +207,17 @@ const handleChange=async()=>{
         return
     }
     setResult(true)
-    if(user?.isPaid){
-        console.log(imageRef)
-        const res = await axios.post("/api/add-image",{userId:id,img:imageRef.current?.src})
-        if(!res.data.success){
-            toast.error("Failed to add image")
-        }
-    }
     setIsTransforming(true)
+    // if(user?.isPaid){
+    //     console.log(imageRef)
+    //     const image = await imageRef.current?.src;
+    //     const res = await axios.post("/api/add-image",{userId:id,img:imageRef.current?.src})
+    //     if(!res.data.success){
+    //         toast.error("Failed to add image")
+    //     }
+    // }
 }
-useEffect(() => {
-    const addImage = async () => {
-        if (result && user?.isPaid && imageRef.current) {
-            try {
-                console.log(imageRef);
-                // Convert the image to a base64 string using a canvas
-                const canvas = document.createElement("canvas");
-                const context = canvas.getContext("2d");
-                if (context) {
-                    const imgElement = imageRef.current as HTMLImageElement;
-                    // Set canvas dimensions
-                    canvas.width = imgElement.naturalWidth;
-                    canvas.height = imgElement.naturalHeight;
-                    // Draw the image onto the canvas
-                    context.drawImage(imgElement, 0, 0);
-                    // Convert canvas to base64 image string
-                    const image = canvas.toDataURL("image/png");
-                    // Make API call to add the image
-                    const res = await axios.post("/api/add-image", {
-                        userId: id,
-                        img: image,
-                    });
-                    if (!res.data.success) {
-                        toast.error("Failed to add image");
-                    }
-                } else {
-                    console.error("Canvas context is not available.");
-                }
-            } catch (error) {
-                console.error("Error adding image:", error);
-                toast.error("An error occurred while adding the image.");
-            } finally {
-                setIsTransforming(false); // Stop transforming after API call
-            }
-        }
-    };
 
-    addImage();
-}, [result, user, id]); 
 const handleClick=()=>{
     setShow(true)
 }
@@ -281,7 +251,7 @@ return (
 
         {uploadedImage && (
             <div className="mt-6">
-            <h2 className="card-title mb-4 text-white">Select Social Media Format</h2>
+            <h2 className="card-title mb-4 dark:text-white">Select Social Media Format</h2>
             <div className="form-control">
                 <select
                 className="select select-bordered w-full bg-white border-blue-300 text-blue-900"
@@ -452,7 +422,7 @@ const [bgFormat, setBgFormat] = useState<BgFormat>("Ai Fill")
             </div>
 
             <div className="mt-6 relative">
-                <h3 className="text-lg font-semibold mb-2 text-white">Preview:</h3>
+                <h3 className="text-lg font-semibold mb-2 dark:text-white">Preview:</h3>
                 <div className="flex justify-center">
                 {isTransforming && (
                     <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 z-10 bg-blue-50">
@@ -473,7 +443,10 @@ const [bgFormat, setBgFormat] = useState<BgFormat>("Ai Fill")
                             // fillBackground={bgFormat === "Ai Fill"}
                             // replace={bgFormat === "Ai Object Replace" ? [replace1, replace2] : undefined}
                             {...getDynamicProps(bgFormat,object,color,prompt,replace1,replace2)} // Dynamically apply other props
-                            onLoad={() => setIsTransforming(false)}
+                            onLoad={() => {
+                                setIsTransforming(false)
+                                handleAdd()
+                            }}
                             onError={handleError}
                         />
 
