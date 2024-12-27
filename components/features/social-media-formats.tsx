@@ -5,28 +5,68 @@ const platforms = [
     name: "Instagram",
     formats: [
     { label: "Post", size: "1:1 (1080x1080px)" },
+    { label: "Potrait", size: "4:5 (1080x1350px)" },
+    { label: "Landscape", size: "2:1 (1080x560px)" },
     { label: "Story", size: "9:16 (1080x1920px)" },
-    { label: "Reel", size: "9:16 (1080x1920px)" }
     ],
-    icon: "https://images.unsplash.com/photo-1611262588024-d12430b98920?w=60&h=60&fit=crop"
+    icon: "https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Instagram-256.png"
 },
 {
     name: "YouTube",
     formats: [
     { label: "Thumbnail", size: "16:9 (1280x720px)" },
     { label: "Banner", size: "16:9 (2560x1440px)" },
-    { label: "Video", size: "16:9 (1920x1080px)" }
+    { label: "Video", size: "16:9 (1920x1080px)" },
+    { label: "Channel Cover", size: "2560:1440 (2560x1440px)" },
     ],
-    icon: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=60&h=60&fit=crop"
+    icon: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/395_Youtube_logo-256.png"
+},
+{
+    name:"Facebook",
+    formats: [
+        { label: "Post", size: "1:1 (1200x1200px)" },
+        { label: "Cover", size: "205:78 (820x312px)" },
+        { label: "Story", size: "9:16 (1080x1920px)" },
+    ],
+    icon: "https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Facebook_colored_svg_copy-256.png"
+},
+{
+    name:"LinkedIn",
+    formats: [
+        { label: "Post", size: "2:1 (1200x628px)" },
+        { label: "Cover", size: "4:1 (1584x396px)" }
+    ],
+    icon: "https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png"
+},
+{
+    name:"Twitch",
+    formats: [
+        { label: "Profile Banner", size: "120:48 (1200x480px)" },
+        { label: "Offline Screen", size: "16:9 (1920x1080px)" },
+    ],
+    icon: "https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/28-twitch-256.png"
 },
 {
     name: "TikTok",
     formats: [
-    { label: "Video", size: "9:16 (1080x1920px)" },
-    { label: "Profile", size: "1:1 (200x200px)" }
+    { label: "Video", size: "9:16 (1200x675px)" },
     ],
-    icon: "https://images.unsplash.com/photo-1611605698335-8b1569810432?w=60&h=60&fit=crop"
-}
+    icon: "https://cdn2.iconfinder.com/data/icons/social-media-2421/512/TikTok-256.png"
+},
+{
+    name:"Snapchat",
+    formats: [
+        { label: "Story", size: "9:16 (1080x1920px)" },
+    ],
+    icon: "https://cdn4.iconfinder.com/data/icons/social-media-flat-7/64/Social-media_Snapchat-256.png"
+},
+{
+    name:"Pinterest",
+    formats: [
+        { label: "Pin", size: "2:3 (1000x1500px)" },
+    ],
+    icon: "https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Pinterest_colored_svg-512.png"
+},
 ]
 
 export function SocialMediaFormats() {
