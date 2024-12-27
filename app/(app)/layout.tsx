@@ -1,52 +1,24 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { getCookie } from "cookies-next";
 import axios from "axios";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import SideBar from "@/components/SideBar";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-const [user, setUser] = useState<{ name: string; email: string } | null>(null); // Null means not fetched yet
-const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu toggle
-
-const getUserId = useCallback(async () => {
-    const userId = await getCookie("id");
-    if (userId) {
-    await fetchUserData(userId as string);
-    } else {
-    setUser(null); // No user is logged in
+const [isMenuOpen, setIsMenuOpen] = useState(false); 
+const [isuser, setIsuser] = useState(false)
+const getUserId = async () => {
+    const response = await axios.get("/api/get-token");
+    if (!response.data.success) {
+        return;
     }
-}, []);
+    setIsuser(true)
+};
 
 useEffect(() => {
-    getUserId(); // Call the async function inside useEffect
-}, [getUserId]);
-
-const fetchUserData = async (userId: string) => {
-    try {
-    const response = await axios.post(
-        "/api/user",
-        { id: userId },
-        {
-        headers: {
-            "Content-Type": "application/json",
-        },
-        }
-    );
-
-    if (response.data.success) {
-        setUser(response.data.user);
-        console.log("User fetched:", response.data.user);
-    } else {
-        toast.error("Failed to fetch user data");
-        setUser(null);
-    }
-    } catch (error) {
-    console.error("Error fetching user data:", error);
-    setUser(null);
-    }
-};
+    getUserId(); 
+}, []);
 
 return (
     <div className="min-h-screen bg-gray-100 dark:bg-black">
@@ -57,7 +29,7 @@ return (
     <div className="lg:pl-64">
         {/* Top navbar */}
         <Navbar
-        isUser={!!user} // Pass `true` if `user` is not null
+        isUser={isuser} 
         onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
         isMenuOpen={isMenuOpen}
         />
