@@ -8,7 +8,7 @@ interface ArrowEffectProps {
 
 export function ArrowEffect({ effect }: ArrowEffectProps) {
 return (
-    <div className="flex flex-col items-center gap-3 py-4">
+    <div className="flex flex-col items-center gap-3 py-4 mr-16">
         <div className="relative transform transition-transform duration-300 hover:scale-105">
             <span className="text-sm font-medium text-white px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 shadow-md">
             {effect}

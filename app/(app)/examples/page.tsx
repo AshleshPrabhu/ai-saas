@@ -1,18 +1,43 @@
 "use client"
 
 import { BeforeAfterCard } from "@/components/examples/before-after-card"
+import before1 from "@/public/before1.png"
+import after1 from "@/public/after1.png"
+import before2 from "@/public/before2.png"
+import after2 from "@/public/after2.png"
+import before3 from "@/public/before3.png"
+import after3 from "@/public/after3.png"
+import before4 from "@/public/before4.png"
+import after4 from "@/public/after4.png"
+import before5 from "@/public/before5.png"
+import after5 from "@/public/after5.png"
 
 const examples = [
 {
-    beforeImage: "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=300&h=300&fit=crop",
-    afterImage: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=300&h=300&fit=crop",
-    effect: "AI Enhancement"
+    beforeImage: before1,
+    afterImage: after1,
+    effect: "recolor"
 },
 {
-    beforeImage: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D    ",
-    afterImage: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=300&h=300&fit=crop",
-    effect: "Color Correction"
-}
+    beforeImage: before2,
+    afterImage: after2,
+    effect: "replace"
+},
+{
+    beforeImage: before3,
+    afterImage: after3,
+    effect: "replace bg"
+},
+{
+    beforeImage: before4,
+    afterImage: after4,
+    effect: "blur"
+},
+{
+    beforeImage: before5,
+    afterImage: after5,
+    effect: "blend"
+},
 ]
 
 export default function ExamplesPage() {
