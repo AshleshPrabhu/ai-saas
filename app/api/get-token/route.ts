@@ -10,7 +10,7 @@ try {
 
     // Check if token exists
     if (!token) {
-    return NextResponse.json({ error: 'Unauthorized: Token not found',success:false }, { status: 401 });
+    return NextResponse.json({ error: 'Unauthorized: Token not found',success:false }, { status: 201 });
     }
 
     // Verify and decode the token

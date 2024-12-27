@@ -47,7 +47,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {/* Main content */}
         <div className="lg:pl-64">
             {/* Top navbar */}
-            <Navbar isUser={Array.isArray(Object.keys(user))} onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
+            <Navbar isUser={user.name!==""} onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
             {children}
         </div>
         </div>
