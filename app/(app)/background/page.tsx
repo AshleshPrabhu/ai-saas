@@ -200,7 +200,7 @@ const handleChange=async()=>{
         return
     }
     if(user?.isPaid){
-        const res = await axios.post("/api/add-image",{userId:id,img:uploadedImage})
+        const res = await axios.post("/api/add-image",{userId:id,img:imageRef.current?.src})
         if(!res.data.success){
             toast.error("Failed to add image")
         }

@@ -36,7 +36,15 @@ const socialFormats = {
 };
 
 type SocialFormat = keyof typeof socialFormats;
-
+interface User {
+  email:string   
+  name:string
+  videos: object
+  isPaid:boolean
+  order:{
+      plan:string
+  }
+}
 function SocialShare() {
   const [selectedFormat, setSelectedFormat] = useState<SocialFormat>("Instagram Square (1:1)");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -44,6 +52,7 @@ function SocialShare() {
   const [isTransforming, setIsTransforming] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const [id, setId] = useState<string>("");
+  const [user, setUser] = useState<User>()
 
   useEffect(() => {
     if (uploadedImage) {
@@ -57,6 +66,12 @@ function SocialShare() {
       toast.error("Failed to upload");
     }
     setId(response.data.decodedToken.id);
+    const user = await axios.post("/api/user",{id:response.data.decodedToken.id})
+    if(!user.data.user){
+        toast.error("Failed to upload")
+        return
+    }
+    setUser(user.data.user)
   };
 
   useEffect(() => {
@@ -102,6 +117,14 @@ function SocialShare() {
         document.body.removeChild(a);
       });
   };
+  const handleUpload=async()=>{
+    if(user?.isPaid){
+      const res = await axios.post("/api/add-image",{userId:id,img:imageRef.current?.src})
+      if(!res.data.success){
+          toast.error("Failed to add image")
+      }
+    }
+  }
 
   return (
     <div className="container mx-auto p-4 max-w-4xl bg-white text-blue-900">
@@ -136,7 +159,10 @@ function SocialShare() {
                 <select
                   className="select select-bordered w-full bg-white border-blue-300 text-blue-900"
                   value={selectedFormat}
-                  onChange={(e) => setSelectedFormat(e.target.value as SocialFormat)}
+                  onChange={(e) => {
+                    setSelectedFormat(e.target.value as SocialFormat)
+                    handleUpload()
+                  }}
                 >
                   {Object.keys(socialFormats).map((format) => (
                     <option key={format} value={format}>
