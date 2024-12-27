@@ -218,7 +218,7 @@ return (
         Background changer for social media
     </h1>
 
-    <div className="card">
+    <div className="card bg-blue-100">
         <div className="card-body">
         <h2 className="card-title mb-4">Upload an Image</h2>
         <div className="form-control">

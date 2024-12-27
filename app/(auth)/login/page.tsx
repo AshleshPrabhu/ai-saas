@@ -72,16 +72,16 @@ export default function Login() {
         }));
     };
 return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-black">
     <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-            <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold">
+            <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold dark:text-white">
             <Wand2 className="h-6 w-6" />
             AImagine
             </Link>
-            <h2 className="mt-6 text-3xl font-bold">Welcome back</h2>
-            <p className="mt-2 text-muted-foreground">
+            <h2 className="mt-6 text-3xl font-bold dark:text-white">Welcome back</h2>
+            <p className="mt-2 text-muted-foreground dark:text-white">
             Sign in to your account to continue
             </p>
         </div>
@@ -95,7 +95,7 @@ return (
                 type="email"
                 placeholder="Enter your email"
                 required
-                className="mt-1"
+                className="mt-1 dark:placeholder:text-white dark:text-white"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -108,7 +108,7 @@ return (
                 type="password"
                 placeholder="Enter your password"
                 required
-                className="mt-1"
+                className="mt-1 dark:placeholder:text-white dark:text-white"
                 name="password"
                 onChange={handleChange}
                 />
@@ -117,7 +117,7 @@ return (
 
             <div className="flex items-center justify-between">
             <div className="text-sm">
-                <Link href="/forgot-password" className="text-primary hover:text-primary/90">
+                <Link href="/forgot-password" className="text-primary hover:text-primary/90 dark:text-blue-300">
                 Forgot your password?
                 </Link>
             </div>
@@ -133,7 +133,7 @@ return (
 
             <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{' '}
-            <Link href="/sign-up" className="text-primary hover:text-primary/90">
+            <Link href="/sign-up" className="text-primary hover:text-primary/90 dark:text-blue-300">
                 Sign up
             </Link>
             </p>

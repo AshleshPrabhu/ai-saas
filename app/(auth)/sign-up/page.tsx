@@ -80,16 +80,16 @@ export default function Signup() {
     };
     
 return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-black">
     <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-            <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold">
+            <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold dark:text-white">
             <Wand2 className="h-6 w-6" />
             AImagine
             </Link>
-            <h2 className="mt-6 text-3xl font-bold">Create your account</h2>
-            <p className="mt-2 text-muted-foreground">
+            <h2 className="mt-6 text-3xl font-bold dark:text-white">Create your account</h2>
+            <p className="mt-2 text-muted-foreground dark:text-white">
             Start creating amazing content with AI
             </p>
         </div>
@@ -103,7 +103,7 @@ return (
                 type="text"
                 placeholder="Enter your name"
                 required
-                className="mt-1"
+                className="mt-1 dark:placeholder:text-white dark:text-white"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
@@ -116,7 +116,7 @@ return (
                 type="email"
                 placeholder="Enter your email"
                 required
-                className="mt-1"
+                className="mt-1 dark:placeholder:text-white dark:text-white"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -129,7 +129,7 @@ return (
                 type="password"
                 placeholder="Create a password"
                 required
-                className="mt-1"
+                className="mt-1 dark:placeholder:text-white dark:text-white"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -145,9 +145,9 @@ return (
             )}
             </Button>
 
-            <p className="text-center text-sm text-muted-foreground">
+            <p className="text-center text-sm text-muted-foreground ">
             Already have an account?{' '}
-            <Link href="/login" className="text-primary hover:text-primary/90">
+            <Link href="/login" className="text-primary hover:text-primary/90 dark:text-blue-300">
                 Sign in
             </Link>
             </p>

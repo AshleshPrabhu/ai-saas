@@ -6,7 +6,7 @@ import Image from "next/image"
 
 export function CreatorSection() {
 return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white dark:bg-black">
     <div className="container">
         <h2 className="text-3xl font-bold text-center mb-12 text-blue-600">
         Meet the Creator
@@ -26,10 +26,10 @@ return (
                 src={myimg}
                 alt="Creator"
                 className="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-blue-100"
-                width={128} // Specify width
-                height={128} // Specify height
+                width={128} 
+                height={128}
             />
-            <h3 className="text-2xl font-bold mb-2 text-gray-900">Your Name</h3>
+            <h3 className="text-2xl font-bold mb-2 text-gray-900">Ashlesh Prabhu</h3>
             <p className="text-blue-600 mb-4">Founder & Developer</p>
             <p className="text-gray-600 mb-6 max-w-lg mx-auto">
                 Full-stack developer passionate about creating websites with different tech stacks.

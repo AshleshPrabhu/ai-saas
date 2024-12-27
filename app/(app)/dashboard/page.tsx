@@ -43,7 +43,7 @@ export default function DashboardPage() {
     return (
         <>
             {isUserPaid ? (
-                <div className="container py-8">
+                <div className="container py-8 dark:bg-black ">
                     <div className="flex justify-between items-center mb-8">
                         <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                             Dashboard Overview
@@ -53,15 +53,15 @@ export default function DashboardPage() {
                         <StatsCards />
 
                         <section>
-                            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Your Videos</h2>
+                            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Your Videos</h2>
                             <VideoGrid />
                         </section>
                         <section>
-                            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Your Images</h2>
+                            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Your Images</h2>
                             <ImageGrid />
                         </section>
                         <section>
-                            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Content Overview</h2>
+                            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Content Overview</h2>
                             <StorageChart />
                         </section>
                     </div>

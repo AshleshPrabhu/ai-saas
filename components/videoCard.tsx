@@ -99,10 +99,10 @@ const VideoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
         </figure>
         <div className="card-body p-4">
             <h2 className="card-title text-lg font-bold">{video.title}</h2>
-            <p className="text-sm text-base-content opacity-70 mb-4">
+            <p className="text-sm opacity-70 mb-4 text-black">
             {video.description}
             </p>
-            <p className="text-sm text-base-content opacity-70 mb-4">
+            <p className="text-sm  opacity-70 mb-4 text-black">
             Uploaded {dayjs(video.createdAt).fromNow()}
             </p>
             <div className="grid grid-cols-2 gap-4 text-sm">
@@ -124,7 +124,7 @@ const VideoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
             <div className="flex justify-between items-center mt-4">
             <div className="text-sm font-semibold">
                 Compression:{" "}
-                <span className="text-accent">{compressionPercentage}%</span>
+                <span className="text-accent text-black">{compressionPercentage}%</span>
             </div>
             <button
                 className="btn btn-primary btn-sm"

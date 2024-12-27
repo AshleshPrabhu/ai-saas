@@ -5,7 +5,7 @@ import { PricingTiers } from "@/components/pricing/pricing-tiers"
 
 export default function PricingPage() {
     return (
-        <div className="min-h-screen bg-white pt-16">
+        <div className="min-h-screen dark:bg-black bg-white pt-16">
             <PricingHeader />
             <PricingTiers />
         </div>

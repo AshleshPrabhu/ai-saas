@@ -73,10 +73,10 @@ useEffect(() => {
 const total = data.reduce((sum, item) => sum + item.value, 0);
 
 return (
-    <Card className="p-6 bg-white border-2 border-blue-100">
+    <Card className="p-6 dark:bg-black border-2 border-blue-100">
     <div className="mb-6">
-        <h3 className="text-lg font-medium text-gray-900">Content Distribution</h3>
-        <p className="text-sm text-gray-600">Total content breakdown</p>
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Content Distribution</h3>
+        <p className="text-sm text-gray-600 dark:text-white">Total content breakdown</p>
     </div>
     <div className="h-[400px] w-full">
         <ResponsiveContainer width="100%" height="100%">
@@ -114,7 +114,7 @@ return (
             verticalAlign="bottom"
             height={36}
             formatter={(value: string) => (
-                <span className="text-gray-900">{value}</span>
+                <span className="text-gray-900 dark:text-white">{value}</span>
             )}
             />
         </PieChart>
@@ -123,8 +123,8 @@ return (
     <div className="grid grid-cols-2 gap-4 mt-6">
         {data.map((item, index) => (
         <div key={item.name} className="text-center">
-            <p className="text-sm text-gray-600">{item.name}</p>
-            <p className="text-2xl font-bold" style={{ color: COLORS[index % COLORS.length] }}>
+            <p className="text-sm text-gray-600 dark:text-white">{item.name}</p>
+            <p className="text-2xl font-bold dark:text-white" style={{ color: COLORS[index % COLORS.length] }}>
             {item.value.toLocaleString()}
             </p>
         </div>

@@ -114,3 +114,10 @@
 .hover\:scale-102:hover {
   transform: scale(1.02);
 }
+
+.gradient{
+  @apply bg-gradient-to-b from-white via-blue-400 to-blue-700
+}
+.gradient-title{
+  @apply gradient text-transparent bg-clip-text
+}

@@ -6,7 +6,7 @@ import { TechStack } from "@/components/about/tech-stack"
 
 export default function AboutPage() {
     return (
-        <div className="min-h-screen bg-white pt-16">
+        <div className="min-h-screen dark:bg-black bg-white pt-16">
             <AboutHero />
             <CreatorSection />
             <TechStack />

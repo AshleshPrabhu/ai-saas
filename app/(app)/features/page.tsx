@@ -7,11 +7,11 @@ import { BackgroundEffects } from "@/components/features/background-effects"
 
 export default function FeaturesPage() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-16">
-        <FeatureHero />
-        <FeatureGrid />
-        <SocialMediaFormats />
-        <BackgroundEffects />
+        <div className="min-h-screen dark:bg-black bg-gradient-to-b from-blue-50 to-white  pt-16">
+            <FeatureHero />
+            <FeatureGrid />
+            <SocialMediaFormats />
+            <BackgroundEffects />
         </div>
     )
 }

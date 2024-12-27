@@ -42,13 +42,13 @@ const examples = [
 
 export default function ExamplesPage() {
 return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-20">
+    <div className="min-h-screen dark:bg-black bg-gradient-to-b from-blue-50 to-white pt-20">
         <div className="container py-16">
             <div className="text-center mb-16 animate-fade-in">
-                <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent dark:gradient-title">
                     Image Transformation Examples
                 </h1>
-                <p className="text-blue-600/80 text-lg">
+                <p className="text-blue-600/80 text-lg dark:text-white">
                     See the power of our AI transformations
                 </p>
             </div>

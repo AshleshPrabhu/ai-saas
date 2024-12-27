@@ -91,7 +91,8 @@ export function PricingTiers() {
     const getUserId = async () => {
         const response = await axios.get("/api/get-token");
         if (!response.data.success) {
-            toast.error("Failed to upload");
+            toast.error("Please Login");
+            return
         }
         setId(response.data.decodedToken.id);
         const userres = await axios.post("/api/user",{id:response.data.decodedToken.id})

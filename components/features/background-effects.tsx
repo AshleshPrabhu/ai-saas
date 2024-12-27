@@ -44,10 +44,10 @@ return (
     <section className="py-16">
     <div className="container">
         <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold mb-4 dark:gradient-title bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
             Professional Background Effects
         </h2>
-        <p className="text-blue-600/80">
+        <p className="dark:text-white text-blue-600/80">
             Transform your backgrounds with powerful AI effects
         </p>
         </div>
