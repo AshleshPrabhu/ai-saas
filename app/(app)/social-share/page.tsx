@@ -127,12 +127,12 @@ function SocialShare() {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl bg-white text-blue-900">
-      <h1 className="text-3xl font-bold mb-6 text-center">
+    <div className="container mx-auto p-4 max-w-4xl bg-white dark:bg-black">
+      <h1 className="text-3xl font-bold mb-6 text-center dark:gradient-title">
         Social Media Image Creator
       </h1>
 
-      <div className="card bg-blue-100">
+      <div className="card bg-blue-100 dark:bg-black">
         <div className="card-body">
           <h2 className="card-title mb-4">Upload an Image</h2>
           <div className="form-control">

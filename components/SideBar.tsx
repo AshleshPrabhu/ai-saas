@@ -101,7 +101,7 @@ function SideBar() {
     return (
         <div>
             <aside
-                className={`fixed block inset-y-0 left-0 z-50 w-64 dark:bg-black shadow-lg transform ${
+                className={`fixed block dark:border-white inset-y-0 left-0 z-50 w-64 dark:bg-black shadow-lg transform ${
                     sidebarOpen ? "translate-x-0" : "-translate-x-full"
                 } lg:translate-x-0 transition-transform duration-200 ease-in-out`}
             >

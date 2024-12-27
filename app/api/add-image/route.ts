@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 export async function POST(request:NextRequest) {
     try {
         const {userId,img} = await request.json()
+        console.log(userId,img)
         if(!userId||!img){
             return NextResponse.json({error:"all fields are nessacery",success:false},{status:400})
         }

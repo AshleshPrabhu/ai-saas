@@ -69,8 +69,8 @@ function VideoUpload() {
     }
   }
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Upload Video</h1>
+    <div className="container mx-auto p-4 dark:bg-black">
+      <h1 className="text-2xl font-bold mb-4 dark:text-white">Upload Video</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="label">
@@ -80,7 +80,7 @@ function VideoUpload() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-blue-100 border-black border-[3px]"
             required
           />
         </div>
@@ -91,7 +91,7 @@ function VideoUpload() {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="textarea textarea-bordered w-full"
+            className="textarea textarea-bordered w-full bg-blue-100"
           />
         </div>
         <div>
@@ -102,7 +102,7 @@ function VideoUpload() {
             type="file"
             accept="video/*"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="file-input file-input-bordered w-full"
+            className="file-input file-input-bordered w-full bg-blue-100"
             required
           />
         </div>
