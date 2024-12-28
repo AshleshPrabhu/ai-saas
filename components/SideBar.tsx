@@ -148,7 +148,7 @@ function SideBar() {
                                     className={`flex items-center px-4 py-2 text-sm rounded-lg ${
                                         pathname === "/login"
                                             ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-gray-50"
+                                            : "text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:text-black"
                                     }`}
                                 >
                                     <User className="w-5 h-5 mr-3" />
@@ -159,7 +159,7 @@ function SideBar() {
                                     className={`flex items-center px-4 py-2 text-sm rounded-lg ${
                                         pathname === "/sign-up"
                                             ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-gray-50"
+                                            : "text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:text-black"
                                     }`}
                                 >
                                     <User2Icon className="w-5 h-5 mr-3" />

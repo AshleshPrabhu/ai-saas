@@ -18,6 +18,7 @@ interface FormData {
 export default function Login() {
     const router =useRouter()
     const [loading, setLoading] = useState(false)
+    const [disable, setDisable] = useState(false)
     const [formData,setFormData] = useState<FormData>({
         email : '',
         password : ''
@@ -54,7 +55,12 @@ export default function Login() {
                 toast.error(response.data.error)
                 return
             }
+            setFormData({
+                email : '',
+                password : ''
+            })
             toast.success("login Successfull")
+            setDisable(true)
             router.push('/home')
         } catch (error) {
             toast.error("failed to login")
@@ -123,7 +129,7 @@ return (
             </div>
             </div>
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" disabled={disable} className={`w-full ${disable?"cursor-not-allowed":"cursor-pointer"}`} >
             {loading?(
                 <Loader2/>
             ):(

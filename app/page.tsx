@@ -18,7 +18,7 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="py-20 px-4 dark:bg-black bg-gradient-to-b from-blue-50 to-white ">
+        <section className="py-20 px-4 bg-gradient-to-b from-blue-50 to-white dark:from-black dark:to-gray-900  ">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight dark:text-white ">
               Transform Your Media with
@@ -34,7 +34,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/examples">
-                <Button size="lg" variant="outline" className="border-blue-200 hover:bg-blue-50">
+                <Button size="lg" variant="outline" className="border-blue-200 hover:bg-blue-50 hover:text-black">
                   View Examples
                 </Button>
               </Link>
@@ -49,28 +49,28 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-blue-50 p-8 rounded-xl shadow-sm dark:shadow-xl hover:shadow-md transition-shadow dark:hover:shadow-white">
                 <ImageIcon className="h-12 w-12 text-blue-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Image Enhancement</h3>
+                <h3 className="text-xl font-semibold mb-2 text-black">Image Enhancement</h3>
                 <p className="text-muted-foreground">
                   Transform your photos with AI-powered filters and effects.
                 </p>
               </div>
               <div className="bg-blue-50 p-8 rounded-xl shadow-sm dark:shadow-xl hover:shadow-md transition-shadow dark:hover:shadow-white">
                 <Video className="h-12 w-12 text-blue-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Video Magic</h3>
+                <h3 className="text-xl font-semibold mb-2 text-black">Video Magic</h3>
                 <p className="text-muted-foreground">
                   Add stunning effects to your videos with one click.
                 </p>
               </div>
               <div className="bg-blue-50 p-8 rounded-xl shadow-sm dark:shadow-xl hover:shadow-md transition-shadow dark:hover:shadow-white">
                 <Zap className="h-12 w-12 text-blue-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Smart Filters</h3>
+                <h3 className="text-xl font-semibold mb-2 text-black">Smart Filters</h3>
                 <p className="text-muted-foreground">
                   AI-powered filters that adapt to your content.
                 </p>
               </div>
               <div className="bg-blue-50 p-8 rounded-xl shadow-sm dark:shadow-xl hover:shadow-md transition-shadow dark:hover:shadow-white">
                 <Code2 className="h-12 w-12 text-blue-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Code Snippets</h3>
+                <h3 className="text-xl font-semibold mb-2 text-black">Code Snippets</h3>
                 <p className="text-muted-foreground">
                   Get cloudinary code snippets for your effects.
                 </p>
@@ -80,7 +80,7 @@ export default function Home() {
         </section>
 
         {/* Example Section */}
-        <section className="py-20 px-4 dark:bg-black bg-gradient-to-b from-white to-blue-50">
+        <section className="py-20 px-4 bg-gradient-to-b from-white to-blue-50 dark:from-black dark:to-gray-900">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 dark:text-white">See the Magic</h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -95,7 +95,7 @@ export default function Home() {
                   Before
                 </div>
               </div>
-              <div className="relative h-[400px] rounded-xl overflow-hidden shadow-lg">
+              <div className="relative h-[400px] rounded-xl overflow-hidden shadow-lg dark:shadow-white">
                 <Image
                   src={after}
                   alt="After"

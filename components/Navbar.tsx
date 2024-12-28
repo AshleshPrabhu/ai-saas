@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { ThemeToggle } from '@/components/theme-toggle';
 interface NavbarProps {
     onMenuToggle?: () => void;               
     isMenuOpen?: boolean;     
@@ -49,6 +50,7 @@ return (
 
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center gap-8">
+            <ThemeToggle/>
         <Link href="/features" className="hover:text-blue-100 transition-colors">
             Features
         </Link>
@@ -91,6 +93,7 @@ return (
         {isMenuOpen  && (
         <div className="absolute top-20 left-0 right-0 bg-blue-600 p-4 md:hidden z-50">
             <nav className="flex flex-col gap-4">
+            <div className='w-full flex items-center justify-center'><ThemeToggle/></div>
             <Link href="/features" className="w-full flex items-center justify-center hover:text-blue-100 transition-colors">
                 Features
             </Link>

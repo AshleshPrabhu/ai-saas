@@ -74,7 +74,7 @@ return (
     <section className="py-16 dark:bg-black bg-blue-50">
     <div className="container">
         <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4 dark:gradient-title bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold mb-4 gradient-title bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
             Perfect Formats for Every Platform
         </h2>
         <p className="dark:text-white text-blue-600/80 ">
@@ -95,7 +95,7 @@ return (
                     alt={platform.name}
                     className="w-10 h-10 rounded-full"
                 />
-                <h3 className="text-xl font-semibold">{platform.name}</h3>
+                <h3 className="text-xl font-semibold text-black">{platform.name}</h3>
                 </div>
                 <div className="space-y-4">
                 {platform.formats.map((format) => (

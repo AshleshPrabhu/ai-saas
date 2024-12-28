@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster, toast } from 'sonner';
 const inter = Inter({ subsets: ['latin'] });
+import { ThemeProvider } from 'next-themes';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,8 +21,10 @@ export default function RootLayout({
         <script src="https://kit.fontawesome.com/b7d6826033.js" ></script>
       </head>
       <body className={inter.className}>
-        {children}
-        <Toaster />
+        <ThemeProvider attribute="class"> 
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

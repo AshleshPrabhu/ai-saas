@@ -224,7 +224,7 @@ const handleClick=()=>{
 
 return (
     <div className="container mx-auto p-4 max-w-4xl bg-white dark:bg-black">
-    <h1 className="text-3xl font-bold mb-6 text-center dark:gradient-title">
+    <h1 className="text-3xl font-bold mb-6 text-center gradient-title">
         Background changer for social media
     </h1>
 
@@ -238,7 +238,7 @@ return (
             <input
             type="file"
             onChange={handleFileUpload}
-            className="file-input file-input-bordered file-input-primary w-full bg-blue-50"
+            className="file-input file-input-bordered text-black file-input-primary w-full bg-blue-50"
             />
         </div>
         

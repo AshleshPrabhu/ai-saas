@@ -118,6 +118,9 @@
 .gradient{
   @apply bg-gradient-to-b from-white via-blue-400 to-blue-700
 }
-.gradient-title{
+/* .gradient-title{
   @apply gradient text-transparent bg-clip-text
+} */
+.dark .gradient-title {
+  @apply gradient text-transparent bg-clip-text; /* Adjust for dark mode */
 }

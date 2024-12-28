@@ -4,7 +4,7 @@ export function ContactInfo() {
 return (
     <div className="space-y-8 dark:bg-black">
     <div>
-        <h1 className="text-4xl font-bold mb-4 text-blue-600 dark:gradient-title">
+        <h1 className="text-4xl font-bold mb-4 text-blue-600 gradient-title">
         Get in Touch
         </h1>
         <p className="text-gray-600 dark:text-white">

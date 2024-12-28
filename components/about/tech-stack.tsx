@@ -26,7 +26,7 @@ const technologies = [
 
 export function TechStack() {
 return (
-    <section className="py-24 dark:bg-black bg-gradient-to-b from-white to-blue-50">
+    <section className="py-24 bg-gradient-to-b from-white to-blue-50 dark:from-black dark:to-gray-900">
     <div className="container">
         <h2 className="text-3xl font-bold text-center mb-12 text-blue-600">
         Technology Stack

@@ -98,7 +98,7 @@ const VideoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
             </div>
         </figure>
         <div className="card-body p-4">
-            <h2 className="card-title text-lg font-bold">{video.title}</h2>
+            <h2 className="card-title text-lg font-bold text-black">{video.title}</h2>
             <p className="text-sm opacity-70 mb-4 text-black">
             {video.description}
             </p>
@@ -109,20 +109,20 @@ const VideoCard:React.FC<VideoCardProps>=({video,onDownload})=> {
             <div className="flex items-center">
                 <FileUp size={18} className="mr-2 text-primary" />
                 <div>
-                <div className="font-semibold">Original</div>
-                <div>{formatSize(Number(video.originalSize))}</div>
+                <div className="font-semibold text-black">Original</div>
+                <div className='text-black'>{formatSize(Number(video.originalSize))}</div>
                 </div>
             </div>
             <div className="flex items-center">
-                <FileDown size={18} className="mr-2 text-secondary" />
+                <FileDown size={18} className="mr-2 text-primary" />
                 <div>
-                <div className="font-semibold">Compressed</div>
-                <div>{formatSize(Number(video.compressedSize))}</div>
+                <div className="font-semibold text-black">Compressed</div>
+                <div className='text-black'>{formatSize(Number(video.compressedSize))}</div>
                 </div>
             </div>
             </div>
             <div className="flex justify-between items-center mt-4">
-            <div className="text-sm font-semibold">
+            <div className="text-sm font-semibold text-black">
                 Compression:{" "}
                 <span className="text-accent text-black">{compressionPercentage}%</span>
             </div>
