@@ -61,7 +61,7 @@ export function StatsCards() {
                         title: "Images Converted",
                         value: `${user.images.length}`,
                         icon: Image,
-                        color: "purple",
+                        color: "blue",
                     },
                 ]);
             } else if (user.images.length === 0 && user.videos.length===0) {

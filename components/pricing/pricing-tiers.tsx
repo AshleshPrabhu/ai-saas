@@ -24,7 +24,7 @@ const tiers = [
 },
 {
     name: "Premium",
-    price: "29",
+    price: "2500",
     description: "For professional creators",
     isPopular: true,
     features: [
@@ -40,7 +40,7 @@ const tiers = [
 },
 {
     name: "Trial Premium",
-    price: "0.5",
+    price: "40",
     duration: "1 Day",
     description: "Try all premium features",
     features: [
@@ -204,7 +204,7 @@ export function PricingTiers() {
                     <h3 className="text-2xl font-bold text-gray-900">{tier.name}</h3>
                     
                     <div className="mt-4 mb-6">
-                    <span className="text-4xl font-bold text-gray-900">${tier.price}</span>
+                    <span className="text-4xl font-bold text-gray-900">{tier.price}Rs</span>
                     {tier.duration ? (
                         <span className="text-gray-600">/{tier.duration}</span>
                     ) : (
