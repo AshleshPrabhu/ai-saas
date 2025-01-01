@@ -118,7 +118,7 @@ function VideoUpload() {
             <button  className='btn btn-primary ml-3' >Get Code</button>
           </DialogTrigger>
           <DialogContent className="w-full h-full max-w-3xl mx-auto bg-gray-900 p-6 rounded-lg shadow-lg">
-            <div className='w-full h-full flex items-center justify-center'>
+            <div className='w-full h-full flex items-center justify-center text-white'>
               <DialogTitle>Code Snippet</DialogTitle>
             </div>
             <div className="w-full h-full max-h-[600px] overflow-auto">
