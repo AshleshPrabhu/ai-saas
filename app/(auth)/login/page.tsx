@@ -51,7 +51,7 @@ export default function Login() {
                 }
             ) ;
             if(response.data.success===false){
-                console.log(response.data)
+                // console.log(response.data)
                 toast.error(response.data.error)
                 return
             }
@@ -64,7 +64,7 @@ export default function Login() {
             router.push('/home')
         } catch (error) {
             toast.error("failed to login")
-            console.log(error)
+            // console.log(error)
         }finally{
             setLoading(false)
         }

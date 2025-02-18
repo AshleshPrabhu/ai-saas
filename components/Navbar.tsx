@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({  isUser=false,onMenuToggle, isMenuOpen 
             return;
             }
         } catch (error) {
-            console.log("logout error")
+            // console.log("logout error")
             toast.error("failed to logout")
         } finally{
             setLoading(false)

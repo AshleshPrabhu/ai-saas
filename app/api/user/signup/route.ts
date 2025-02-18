@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     if(!name || !password ||!email){
       return NextResponse.json({error:"please fill all fields",success:false },{status:200})
     }
-    console.log(reqBody);
+    // console.log(reqBody);
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log(newUser);
+    // console.log(newUser);
 
     // await sendEmail({ email, emailType: "VERIFY", userId: newUser.id });
 
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     // Handle any unexpected errors
-    console.log(error)
+    // console.log(error)
     return NextResponse.json({ error: error.message,success:false }, { status: 500 });
   }finally{
     await prisma.$disconnect()

@@ -156,16 +156,16 @@ const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("userId", id);
-    console.log([...formData.entries()]);
+    // console.log([...formData.entries()]);
     try {
         const response = await axios.post("/api/image-upload", formData);
-        console.log(response);
+        // console.log(response);
         if (!response.data.success) {
             throw new Error("failed to upload the image");
         }
         setUploadedImage(response.data.publicId);
     } catch (error) {
-        console.log("err in uploading",error)
+        // console.log("err in uploading",error)
         toast.error("failed to upload image")
     }finally{
         setIsUploading(false)
@@ -199,7 +199,7 @@ const handleError = (error:any) => {
     console.error('Image transformation error:', error);
 };
 const handleChange=async()=>{
-    console.log(bgFormat)
+    // console.log(bgFormat)
     if(premium.includes(bgFormat.trim())){
         alert("This is a premium feature , you cant access the feature but can access code for free")
         return
@@ -207,7 +207,7 @@ const handleChange=async()=>{
     setResult(true)
     setIsTransforming(true)
     // if(user?.isPaid){
-    //     console.log(imageRef)
+    //     // console.log(imageRef)
     //     const image = await imageRef.current?.src;
     //     const res = await axios.post("/api/add-image",{userId:id,img:imageRef.current?.src})
     //     if(!res.data.success){

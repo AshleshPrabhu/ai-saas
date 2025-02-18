@@ -18,12 +18,12 @@ export async function POST(request:NextRequest) {
     try {
         const formData = await request.formData()
         const userId = formData.get("userId") as string
-        console.log(userId)
+        // console.log(userId)
         if(!userId||userId===""){
             return NextResponse.json({error:"unauthorized",success:false},{status:500})
         }
         const file = formData.get("file") as File | null
-        console.log(file)
+        // console.log(file)
         if(!file){
             return NextResponse.json({error:"file not found",success:false},{status:400})
         }
@@ -46,7 +46,7 @@ export async function POST(request:NextRequest) {
         )
         return NextResponse.json({publicId:result.public_id,success:true},{status:201})
     } catch (error) {
-        console.log("cloudinary image upload error",error)
+        // console.log("cloudinary image upload error",error)
         return NextResponse.json({error:"failed to upload image",success:false},{status:500})
     }
 

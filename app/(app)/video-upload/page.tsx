@@ -57,7 +57,7 @@ function VideoUpload() {
       if(!response){
         throw new Error("failed to upload video")
       }
-      console.log(response.data)
+      // console.log(response.data)
       router.push('/home')
       setFile(null)
       setTitle("")

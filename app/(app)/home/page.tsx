@@ -16,14 +16,14 @@ function Home() {
       const response = await axios.post('/api/user',
         {id:id.data.decodedToken.id||""}
       )
-      console.log(response) 
+      // console.log(response) 
       if(Array.isArray(response.data.user.videos)){
         setVideos(response.data.user.videos||[])
       }else{
         throw new Error("unexpected response format")
       }
     } catch (error:any) {
-      console.log(error)
+      // console.log(error)
       setError(error|| "failed to fetch videos")
     }finally{
       setLoading(false)

@@ -84,16 +84,16 @@ function SocialShare() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("userId", id);
-    console.log([...formData.entries()]);
+    // console.log([...formData.entries()]);
     try {
       const response = await axios.post("/api/image-upload", formData);
-      console.log(response);
+      // console.log(response);
       if (!response.data.success) {
         throw new Error("failed to upload the image");
       }
       setUploadedImage(response.data.publicId);
     } catch (error) {
-      console.log("err in uploading", error);
+      // console.log("err in uploading", error);
       alert("failed to upload image");
     } finally {
       setIsUploading(false);

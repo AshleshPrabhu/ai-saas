@@ -17,7 +17,7 @@ export default function DashboardPage() {
             const userResponse = await axios.post('/api/user', {
                 id: idResponse.data.decodedToken?.id || ""
             });
-            console.log(userResponse);
+            // console.log(userResponse);
             setIsUserPaid(userResponse.data.user.isPaid);
         } catch (error: any) {
             console.error("Error fetching user data:", error);

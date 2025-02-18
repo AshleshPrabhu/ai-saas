@@ -12,7 +12,7 @@ try {
     if(!password||!email){
         return NextResponse.json({error: 'Please provide both password and email',success:false}, {status: 200});
     }
-    console.log(reqBody);
+    // console.log(reqBody);
 
     // Fetch the user by email using Prisma
     const user = await prisma.user.findUnique({
@@ -50,7 +50,7 @@ try {
 
     return response;
 } catch (error: any) {
-    console.log(error)
+    // console.log(error)
     return NextResponse.json({ error: error.message,success:false }, { status: 500 });
 }finally{
     await prisma.$disconnect()

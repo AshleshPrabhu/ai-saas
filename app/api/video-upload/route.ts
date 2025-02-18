@@ -76,7 +76,7 @@ export async function POST(request:NextRequest) {
         })
         return NextResponse.json({video,success:true},{status:201})
     } catch (error) {
-        console.log("cloudinary video upload error",error)
+        // console.log("cloudinary video upload error",error)
         return NextResponse.json({error:"failed to upload video",success:false},{status:500})
     }finally{
         await prisma.$disconnect()

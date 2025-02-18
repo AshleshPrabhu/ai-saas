@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 export const POST = async (request: NextRequest) => {
     try {
         const { plan, amount, currency, userId } = await request.json();
-        console.log({ plan, amount, currency, userId });
+        // console.log({ plan, amount, currency, userId });
 
         if (!plan || !amount || !currency || !userId) {
             return NextResponse.json(
@@ -27,7 +27,7 @@ export const POST = async (request: NextRequest) => {
             currency: currency,
             receipt: `ok${userId}`,
         };
-        console.log("Creating Razorpay order...");
+        // console.log("Creating Razorpay order...");
         let razorpayOrder;
         try {
             razorpayOrder = await razorpay.orders.create(options);
@@ -39,12 +39,12 @@ export const POST = async (request: NextRequest) => {
             );
         }
 
-        console.log("Razorpay order created:", razorpayOrder);
+        // console.log("Razorpay order created:", razorpayOrder);
 
         // Calculate expiration (e.g., 30 days from now)
         const expiresAt = new Date();
         expiresAt.setDate(expiresAt.getDate() + 30); // Example: 30 days validity
-        console.log("Calculated expiration:", expiresAt);
+        // console.log("Calculated expiration:", expiresAt);
 
         // Check if the plan is valid
         const validPlans = ['free', 'fullpremium', 'onepremium'];
@@ -66,7 +66,7 @@ export const POST = async (request: NextRequest) => {
                 expiresAt: expiresAt,
             },
         });
-        console.log("Order saved to database:", madeOrder);
+        // console.log("Order saved to database:", madeOrder);
 
         return NextResponse.json(
             { message: "Order created successfully", order: madeOrder, success: true },
