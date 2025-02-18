@@ -68,7 +68,6 @@ function getDynamicProps(
 const socialFormats = {
 "Instagram Square (1:1)": { width: 1080, height: 1080, aspectRatio: "1:1" },
 "Instagram Portrait (4:5)": { width: 1080, height: 1350, aspectRatio: "4:5" },
-"Instagram Landscape (1.91:1)": { width: 1080, height: 566, aspectRatio: "1.91:1" },
 "Instagram Story (9:16)": { width: 1080, height: 1920, aspectRatio: "9:16" },
 "Twitter Post (16:9)": { width: 1200, height: 675, aspectRatio: "16:9" },
 "Twitter Header (3:1)": { width: 1500, height: 500, aspectRatio: "3:1" },
@@ -78,7 +77,6 @@ const socialFormats = {
 "YouTube Thumbnail (16:9)": { width: 1280, height: 720, aspectRatio: "16:9" },
 "YouTube Channel Cover (2560:1440)": { width: 2560, height: 1440, aspectRatio: "16:9" },
 "Pinterest Pin (2:3)": { width: 1000, height: 1500, aspectRatio: "2:3" },
-"LinkedIn Post (1.91:1)": { width: 1200, height: 628, aspectRatio: "1.91:1" },
 "LinkedIn Cover (4:1)": { width: 1584, height: 396, aspectRatio: "4:1" },
 "Snapchat Story (9:16)": { width: 1080, height: 1920, aspectRatio: "9:16" },
 "TikTok Video (9:16)": { width: 1080, height: 1920, aspectRatio: "9:16" },

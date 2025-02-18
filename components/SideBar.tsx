@@ -103,8 +103,9 @@ function SideBar() {
             <aside
                 className={`fixed block dark:border-white inset-y-0 left-0 z-50 w-64 dark:bg-black shadow-lg transform ${
                     sidebarOpen ? "translate-x-0" : "-translate-x-full"
-                } lg:translate-x-0 transition-transform duration-200 ease-in-out`}
+                } lg:translate-x-0 transition-transform duration-200 ease-in-out bg-gray-700 `}
             >
+
                 <div className="h-full flex flex-col">
                     {sidebarOpen && (
                         <button
@@ -122,15 +123,15 @@ function SideBar() {
                     </div>
                     {
                         id!=="" && (
-                            <nav className="flex-1 px-4 py-4 space-y-1">
+                            <nav className="flex-1 px-4 py-4 space-y-1 text-black">
                                 {sidebarItems.map((item) => (
                                     <Link
                                         key={item.href}
                                         href={item.href}
-                                        className={`flex items-center px-4 py-2 text-sm rounded-lg ${
+                                        className={`flex items-center px-4 py-2 text-sm rounded-lg text-white ${
                                             pathname === item.href
-                                                ? "bg-blue-50 text-blue-600"
-                                                : "text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:text-black"
+                                                ? "bg-blue-500 text-black"
+                                                : "text-black dark:text-white hover:bg-gray-50 dark:hover:text-black"
                                         }`}
                                     >
                                         <item.icon className="w-5 h-5 mr-3" />
