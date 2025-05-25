@@ -90,6 +90,5 @@ aimagine/
 
 ## Contact
 
-- Website: [https://videoai.com](https://videoai.com)
 - Email: [ashlesh.prabhu5@gmail.com]
 - LinkedIn: [Ashlesh Prabhu](https://www.linkedin.com/in/ashlesh-prabhu-bb457b312/)

@@ -16,12 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className} suppressHydrationWarning>
       <head>
         <script src="https://kit.fontawesome.com/b7d6826033.js" ></script>
       </head>
       <body className={inter.className}>
-        <ThemeProvider attribute="class"> 
+        <ThemeProvider attribute="class" defaultTheme="system"> 
           {children}
           <Toaster />
         </ThemeProvider>

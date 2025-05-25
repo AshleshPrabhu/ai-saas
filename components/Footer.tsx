@@ -37,10 +37,10 @@ return (
         <h3 className="font-semibold mb-4">Connect</h3>
         <div className="flex gap-4">
             <Link href="https://github.com/AshleshPrabhu" target='_blank' className="hover:text-blue-200 transition-colors">
-                <i className="fa-brands fa-github h-5 w-5"></i>
+                <i className="fa-brands fa-github h-5 w-5" suppressHydrationWarning></i>
             </Link>
             <Link href="https://www.linkedin.com/in/ashlesh-prabhu-bb457b312/" target='_blank' className="hover:text-blue-200 transition-colors">
-                <i className="fa-brands fa-linkedin h-5 w-5"></i>
+                <i className="fa-brands fa-linkedin h-5 w-5" suppressHydrationWarning></i>
             </Link>
         </div>
         </div>
