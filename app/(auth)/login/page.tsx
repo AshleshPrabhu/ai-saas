@@ -64,7 +64,7 @@ export default function Login() {
             router.push('/home')
         } catch (error) {
             toast.error("failed to login")
-            // console.log(error)
+            console.log(error)
         }finally{
             setLoading(false)
         }
