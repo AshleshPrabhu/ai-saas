@@ -17,7 +17,6 @@ export default function Home() {
       <Navbar onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen}/>
 
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="py-20 px-4 bg-gradient-to-b from-blue-50 to-white dark:from-black dark:to-gray-900  ">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight dark:text-white ">
